@@ -1,0 +1,810 @@
+/* 
+ * Academic Shortcodes CSS - Consistent, Professional Design
+ * For Wisdom Journal Manager Plugin
+ */
+
+/* ============================================================================
+   GLOBAL VARIABLES & RESET
+   ============================================================================ */
+
+:root {
+    --sjm-primary: #1e40af;
+    --sjm-primary-light: #3b82f6;
+    --sjm-primary-dark: #1e3a8a;
+    --sjm-secondary: #059669;
+    --sjm-accent: #dc2626;
+    --sjm-warning: #d97706;
+    
+    --sjm-gray-50: #f9fafb;
+    --sjm-gray-100: #f3f4f6;
+    --sjm-gray-200: #e5e7eb;
+    --sjm-gray-300: #d1d5db;
+    --sjm-gray-400: #9ca3af;
+    --sjm-gray-500: #6b7280;
+    --sjm-gray-600: #4b5563;
+    --sjm-gray-700: #374151;
+    --sjm-gray-800: #1f2937;
+    --sjm-gray-900: #111827;
+    
+    --sjm-success: #10b981;
+    --sjm-success-light: #34d399;
+    --sjm-success-bg: #ecfdf5;
+    
+    --sjm-info: #3b82f6;
+    --sjm-info-light: #60a5fa;
+    --sjm-info-bg: #eff6ff;
+    
+    --sjm-warning-bg: #fffbeb;
+    --sjm-error-bg: #fef2f2;
+    
+    --sjm-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --sjm-font-serif: "Times New Roman", Times, serif;
+    
+    --sjm-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --sjm-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --sjm-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --sjm-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    --sjm-radius-sm: 6px;
+    --sjm-radius: 8px;
+    --sjm-radius-md: 12px;
+    --sjm-radius-lg: 16px;
+    
+    --sjm-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --sjm-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================================
+   CONTAINER & LAYOUT
+   ============================================================================ */
+
+.sjm-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    font-family: var(--sjm-font-family);
+    line-height: 1.6;
+    color: var(--sjm-gray-800);
+}
+
+/* ============================================================================
+   FILTER SYSTEM
+   ============================================================================ */
+
+.sjm-filters {
+    background: #ffffff;
+    border: 1px solid var(--sjm-gray-200);
+    border-radius: var(--sjm-radius-md);
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: var(--sjm-shadow-sm);
+}
+
+.sjm-filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.sjm-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sjm-filter-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sjm-gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-filter-input,
+.sjm-filter-select {
+    padding: 10px 12px;
+    border: 1px solid var(--sjm-gray-300);
+    border-radius: var(--sjm-radius);
+    font-size: 14px;
+    color: var(--sjm-gray-700);
+    background: #ffffff;
+    transition: var(--sjm-transition);
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-filter-input:focus,
+.sjm-filter-select:focus {
+    outline: none;
+    border-color: var(--sjm-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.sjm-filter-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    padding-top: 16px;
+    border-top: 1px solid var(--sjm-gray-200);
+}
+
+.sjm-filter-button {
+    padding: 10px 20px;
+    border: 1px solid var(--sjm-gray-300);
+    border-radius: var(--sjm-radius);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sjm-gray-700);
+    background: #ffffff;
+    cursor: pointer;
+    transition: var(--sjm-transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-filter-button:hover {
+    background: var(--sjm-gray-50);
+    border-color: var(--sjm-gray-400);
+    text-decoration: none;
+}
+
+.sjm-filter-button-primary {
+    background: var(--sjm-primary);
+    border-color: var(--sjm-primary);
+    color: #ffffff;
+}
+
+.sjm-filter-button-primary:hover {
+    background: var(--sjm-primary-dark);
+    border-color: var(--sjm-primary-dark);
+    color: #ffffff;
+}
+
+/* ============================================================================
+   GRID LAYOUT
+   ============================================================================ */
+
+.sjm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin: 32px 0;
+}
+
+.sjm-grid-compact {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* ============================================================================
+   LIST LAYOUT
+   ============================================================================ */
+
+.sjm-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 32px 0;
+}
+
+/* ============================================================================
+   CARD COMPONENTS
+   ============================================================================ */
+
+.sjm-card {
+    background: #ffffff;
+    border: 1px solid var(--sjm-gray-200);
+    border-radius: var(--sjm-radius-md);
+    overflow: hidden;
+    transition: var(--sjm-transition);
+    text-decoration: none;
+    display: block;
+    position: relative;
+    box-shadow: var(--sjm-shadow-sm);
+}
+
+.sjm-card:hover {
+    border-color: var(--sjm-primary-light);
+    box-shadow: var(--sjm-shadow-md);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.sjm-card-list {
+    background: #ffffff;
+    border: 1px solid var(--sjm-gray-200);
+    border-radius: var(--sjm-radius-md);
+    overflow: hidden;
+    transition: var(--sjm-transition);
+    text-decoration: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px;
+    box-shadow: var(--sjm-shadow-sm);
+}
+
+.sjm-card-list:hover {
+    border-color: var(--sjm-primary-light);
+    box-shadow: var(--sjm-shadow);
+    text-decoration: none;
+}
+
+/* ============================================================================
+   COVER/THUMBNAIL COMPONENTS
+   ============================================================================ */
+
+.sjm-cover {
+    width: 100%;
+    height: 280px;
+    background: linear-gradient(135deg, var(--sjm-gray-50) 0%, var(--sjm-gray-100) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--sjm-gray-200);
+}
+
+.sjm-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--sjm-transition);
+}
+
+.sjm-card:hover .sjm-cover img {
+    transform: scale(1.05);
+}
+
+.sjm-cover-placeholder {
+    width: 80px;
+    height: 100px;
+    background: #ffffff;
+    border-radius: var(--sjm-radius);
+    border: 2px solid var(--sjm-gray-200);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: var(--sjm-shadow-sm);
+}
+
+.sjm-cover-placeholder::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    height: 3px;
+    background: var(--sjm-primary);
+    border-radius: 2px;
+}
+
+.sjm-cover-placeholder::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 12px;
+    right: 16px;
+    height: 2px;
+    background: var(--sjm-gray-300);
+    border-radius: 1px;
+}
+
+.sjm-cover-list {
+    width: 100px;
+    height: 120px;
+    background: linear-gradient(135deg, var(--sjm-gray-50) 0%, var(--sjm-gray-100) 100%);
+    border-radius: var(--sjm-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    border: 1px solid var(--sjm-gray-200);
+    box-shadow: var(--sjm-shadow-sm);
+}
+
+.sjm-cover-list img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--sjm-radius);
+}
+
+/* ============================================================================
+   CONTENT COMPONENTS
+   ============================================================================ */
+
+.sjm-content {
+    padding: 24px;
+}
+
+.sjm-content-list {
+    flex: 1;
+    min-width: 0;
+    padding-right: 20px;
+}
+
+.sjm-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--sjm-gray-900);
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-title-list {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.sjm-subtitle {
+    font-size: 14px;
+    color: var(--sjm-gray-600);
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-description {
+    font-size: 14px;
+    color: var(--sjm-gray-600);
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.sjm-description-list {
+    -webkit-line-clamp: 2;
+    margin-bottom: 12px;
+}
+
+/* ============================================================================
+   BADGE SYSTEM
+   ============================================================================ */
+
+.sjm-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.sjm-badges-list {
+    margin-bottom: 12px;
+}
+
+.sjm-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: var(--sjm-radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-badge-primary {
+    background: var(--sjm-info-bg);
+    color: var(--sjm-primary);
+    border: 1px solid var(--sjm-primary-light);
+}
+
+.sjm-badge-success {
+    background: var(--sjm-success-bg);
+    color: var(--sjm-secondary);
+    border: 1px solid var(--sjm-success-light);
+}
+
+.sjm-badge-warning {
+    background: var(--sjm-warning-bg);
+    color: var(--sjm-warning);
+    border: 1px solid var(--sjm-warning);
+}
+
+.sjm-badge-error {
+    background: var(--sjm-error-bg);
+    color: var(--sjm-accent);
+    border: 1px solid var(--sjm-accent);
+}
+
+.sjm-badge-secondary {
+    background: var(--sjm-gray-100);
+    color: var(--sjm-gray-600);
+    border: 1px solid var(--sjm-gray-300);
+}
+
+/* ============================================================================
+   METADATA DISPLAY
+   ============================================================================ */
+
+.sjm-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--sjm-gray-500);
+}
+
+.sjm-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sjm-meta-label {
+    font-weight: 500;
+    color: var(--sjm-gray-600);
+}
+
+.sjm-meta-value {
+    color: var(--sjm-gray-700);
+}
+
+/* ============================================================================
+   ACTION BUTTONS
+   ============================================================================ */
+
+.sjm-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.sjm-actions-list {
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.sjm-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--sjm-gray-50);
+    border: 1px solid var(--sjm-gray-300);
+    border-radius: var(--sjm-radius);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sjm-gray-700);
+    text-decoration: none;
+    transition: var(--sjm-transition);
+    cursor: pointer;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-button:hover {
+    background: var(--sjm-gray-100);
+    border-color: var(--sjm-gray-400);
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.sjm-button-primary {
+    background: var(--sjm-primary);
+    border-color: var(--sjm-primary);
+    color: #ffffff;
+}
+
+.sjm-button-primary:hover {
+    background: var(--sjm-primary-dark);
+    border-color: var(--sjm-primary-dark);
+    color: #ffffff;
+}
+
+.sjm-button-icon, .sjm-view-button svg {
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.sjm-button:hover .sjm-button-icon {
+    transform: translateX(2px);
+}
+
+/* ============================================================================
+   AUTHOR DISPLAY
+   ============================================================================ */
+
+.sjm-authors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.sjm-author {
+    font-size: 13px;
+    color: var(--sjm-gray-600);
+    font-weight: 500;
+}
+
+.sjm-author-link {
+    color: var(--sjm-primary);
+    text-decoration: none;
+    transition: var(--sjm-transition);
+}
+
+.sjm-author-link:hover {
+    color: var(--sjm-primary-dark);
+    text-decoration: underline;
+}
+
+/* ============================================================================
+   EMPTY STATE
+   ============================================================================ */
+
+.sjm-empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--sjm-gray-500);
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-empty-state-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    opacity: 0.5;
+}
+
+.sjm-empty-state h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--sjm-gray-700);
+    margin: 0 0 8px 0;
+}
+
+.sjm-empty-state p {
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ============================================================================
+   PAGINATION
+   ============================================================================ */
+
+.sjm-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--sjm-gray-200);
+}
+
+.sjm-pagination-button {
+    padding: 8px 16px;
+    border: 1px solid var(--sjm-gray-300);
+    border-radius: var(--sjm-radius);
+    background: #ffffff;
+    color: var(--sjm-gray-700);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--sjm-transition);
+}
+
+.sjm-pagination-button:hover {
+    background: var(--sjm-gray-50);
+    border-color: var(--sjm-gray-400);
+    text-decoration: none;
+}
+
+.sjm-pagination-button.current {
+    background: var(--sjm-primary);
+    border-color: var(--sjm-primary);
+    color: #ffffff;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+    .sjm-container {
+        padding: 0 20px;
+    }
+    
+    .sjm-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+    
+    .sjm-filters-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .sjm-container {
+        padding: 0 16px;
+    }
+    
+    .sjm-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 16px;
+        margin: 24px 0;
+    }
+    
+    .sjm-list {
+        gap: 12px;
+        margin: 24px 0;
+    }
+    
+    .sjm-card-list {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+        padding: 20px;
+    }
+    
+    .sjm-cover-list {
+        width: 80px;
+        height: 100px;
+        margin: 0 auto;
+    }
+    
+    .sjm-content-list {
+        padding-right: 0;
+    }
+    
+    .sjm-actions-list {
+        margin-left: 0;
+        margin-top: 16px;
+    }
+    
+    .sjm-cover {
+        height: 240px;
+    }
+    
+    .sjm-content {
+        padding: 20px;
+    }
+    
+    .sjm-title {
+        font-size: 16px;
+    }
+    
+    .sjm-title-list {
+        font-size: 18px;
+    }
+    
+    .sjm-filters {
+        padding: 20px;
+    }
+    
+    .sjm-filters-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .sjm-filter-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .sjm-filter-button {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .sjm-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .sjm-cover {
+        height: 200px;
+    }
+    
+    .sjm-cover-placeholder {
+        width: 60px;
+        height: 80px;
+    }
+    
+    .sjm-content {
+        padding: 16px;
+    }
+    
+    .sjm-title {
+        font-size: 15px;
+    }
+    
+    .sjm-badges {
+        gap: 6px;
+    }
+    
+    .sjm-badge {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+
+@media print {
+    .sjm-filters,
+    .sjm-actions,
+    .sjm-button {
+        display: none !important;
+    }
+    
+    .sjm-card,
+    .sjm-card-list {
+        border: 1px solid #000;
+        box-shadow: none;
+        break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    
+    .sjm-title {
+        color: #000;
+    }
+    
+    .sjm-description,
+    .sjm-subtitle {
+        color: #333;
+    }
+}
+
+/* ============================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.sjm-card:focus,
+.sjm-button:focus,
+.sjm-filter-input:focus,
+.sjm-filter-select:focus {
+    outline: 2px solid var(--sjm-primary);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .sjm-card {
+        border-width: 2px;
+    }
+    
+    .sjm-badge {
+        border-width: 2px;
+    }
+    
+    .sjm-button {
+        border-width: 2px;
+    }
+} 

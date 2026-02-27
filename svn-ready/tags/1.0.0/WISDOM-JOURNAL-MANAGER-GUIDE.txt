@@ -1,0 +1,172 @@
+Run Your Journal Like a Pro on WordPress: The Wisdom Journal Manager Guide (v1.0.0)
+
+Why Wisdom Journal Manager
+Wisdom Journal Manager helps universities, departments, and societies run professional journals on WordPress. It manages journals, issues, papers, and authors; supports editorial workflow; and integrates with established academic sources for metadata and citations.
+
+Who Should Use This
+- Editors-in-Chief, Managing Editors, Copy/Layout Editors, Reviewers
+- Authors and contributors
+- Site administrators managing journals in WordPress
+
+What You Need Before You Start
+- WordPress: recent, actively supported version
+- PHP: maintained version with common extensions (curl, json)
+- Database: MySQL/MariaDB as supported by WordPress
+- HTTPS recommended for all admin work
+
+Install in Minutes
+1) WordPress Admin -> Plugins -> Add New -> Upload Plugin
+2) Select the plugin ZIP and click Install
+3) Activate the plugin
+
+Upgrade Without Stress
+- Backup database and files
+- Deactivate, upload the new ZIP, activate again (or use auto-updates when available)
+- Check the changelog for any manual steps on major versions
+
+Clean Uninstall When You’re Done
+- Deactivate: keeps your content and settings
+- Delete from Plugins page: removes the plugin settings and scheduled tasks; your published content remains unless you remove it
+
+A 10-Minute Quick Start
+1) Create a Journal (title, publisher, editors)
+2) Create an Issue (year, volume/number, or mark as Special Issue)
+3) Add Papers (titles, authors, identifiers if available)
+4) Publish a front-end listing by placing a shortcode on a Page
+5) Enable Automation to fetch citations/metadata from supported sources
+
+Where to Find Everything (Admin Menu)
+- Journals: list/add journals
+- Issues: list/add issues
+- Papers: list/add papers
+- Authors: directory and profiles
+- Automation: settings and runs for metadata/citations
+- Security Log: important events and policy notices
+- Rate Limits: view usage and manage quotas
+- Verification: helpful plugin checks
+- Import/Export: structured migration and backups
+
+Who Can Do What (Roles and Permissions)
+- Student: read; limited access to heavy operations
+- Researcher: read; can manage own papers (site policy dependent)
+- Editor: manage journals, issues, papers; run automation
+- Administrator: all capabilities, settings, and logs
+
+How Your Data Is Organized
+- Journals (container) -> Issues (publication units) -> Papers (scholarly items)
+- Authors: profiles linked to papers for accurate attribution
+- Clean relationships enable listings by journal/issue/author
+
+Journals: The Home for Your Publication
+- Identification: name, ISSN, publisher, founding year, frequency, language, subject areas
+- Quality: open access flag, peer review flag, impact factor (optional)
+- Identifiers: DOI prefix (optional)
+- Contacts: website, email
+- Editors: assign Editor-in-Chief, Managing, Copy, Layout editors
+- Visuals: optional logo/cover to brand journal pages
+
+Issues: Volumes and Special Editions
+- Link to a journal, define volume/number/year and publication date
+- Special Issue support with a title/description
+- Metadata: keywords, abstract/summary, DOI (optional)
+- Editorial: guest editors, issue editors, reviewers
+- Assets: cover image and full-issue PDF (optional)
+- Totals: count of included papers
+
+Papers: The Heart of Your Content
+- Identification: title, DOI (optional), keywords, page range
+- Authors: linked profiles with order; corresponding author; affiliations
+- Files: PDF/manuscript URL and related artifacts
+- Flags: open access, peer reviewed
+- Dates: submission, acceptance, publication
+- Tracking: status and history of changes and decisions
+- Versioning: version number/date/notes for each revision
+- Funding and ethics: funding statement, conflicts of interest, ethics approvals (optional)
+- Copyright & license: reuse terms and notices
+- Publication lifecycle: final publication and correction/errata history
+- Metrics: citations, views, and last automation update details
+
+Authors: Profiles and Proper Attribution
+- Profiles: name, email (optional), affiliation, website, bio
+- Identifiers: ORCID (optional)
+- Linkage: connect authors to papers with role/order and a corresponding author flag
+
+Editorial Workflow at a Glance
+- Typical lifecycle: Submission -> Review -> Decision -> Copy/Layout -> Publication
+- Status changes are recorded with timestamps and optional notes
+- Best practices: keep decision notes concise; maintain transparent correction history
+
+Automation and Academic Integrations
+- Sources: established academic providers to retrieve metadata and citation counts
+- Settings: add credentials (if required), select update frequency
+- Runs: schedule background updates; run manually for a journal or scoped set of papers
+- Reliability: handles timeouts/errors gracefully and records outcomes
+- Data handling: incoming data is validated and safely mapped; local edits are preserved unless you opt to overwrite
+- Rate limits: protect your site and providers; administrators can review usage
+
+Security, Simply Explained
+- Inputs are validated; outputs are escaped for their context
+- Administrative actions require verified tokens
+- Capability checks ensure only authorized roles perform sensitive actions
+- Database queries are parameterized; file uploads are validated
+- Sensitive keys are stored encrypted and only used when needed
+- High-cost operations are rate-limited with user feedback and logging
+- Guidance: enforce HTTPS for admin, keep WordPress/PHP updated, use strong passwords/MFA, restrict admin access
+
+Front-End Shortcodes You Can Copy
+- Journals listing: [journals]
+- Journals filtered (publisher, open access): [journals publisher="Aethex" open_access="1" layout="list"]
+- Issues for a journal and year: [issues journal_id="123" year="2024"]
+- Special issues only: [issues special_issue="1"]
+- Papers in an issue: [papers issue_id="456" per_page="24"]
+- Papers by author and keyword: [papers author="Surname" keyword="Automation"]
+- Papers by type: [papers paper_type="Research Article"]
+
+Import and Export Your Data
+- Import structured data (CSV/JSON) with required headers
+- Use smaller batches on limited hosts; validate before import
+- Export data for backup or migration
+
+Customize Templates and Styling
+- Default templates are provided; you may override responsibly in your theme
+- Keep overrides minimal; avoid editing the plugin core files
+- Add CSS in your theme or a custom plugin to maintain compatibility
+
+Troubleshooting Quick Fixes
+- Menus not visible: confirm your role/capabilities and plugin activation
+- Attempt to read property ID on null: open a Paper edit screen or update to the latest version (handled)
+- Citations not updating: enable Automation, verify credentials, and allow scheduled runs; check rate limits
+- Import errors: confirm file format and required fields; try smaller batches
+- Review Security Log for actionable notices and resolved blocks
+
+Performance Tips
+- Cache shortcode pages that list many items
+- Choose sensible automation frequency (often weekly is sufficient)
+- Use filters (journal, year, type) and pagination for large datasets
+
+Privacy and Compliance
+- Stored data: journals, issues, papers, author profiles, and operational logs
+- External calls: only to selected academic sources for metadata retrieval
+- Respect user data requests using WordPress export/erase tools
+- Publish a site-level privacy notice appropriate to your institution
+
+Releases and Updates
+- Versioning: semantic (MAJOR.MINOR.PATCH) with synced plugin header and readme stable tag
+- Before release: update changelog/docs, verify assets (icons, banners, screenshots), smoke-test install/upgrade/uninstall
+- Distribution: publish to WordPress.org following SVN guidelines
+- Rollback: keep backups; revert to a prior version if needed
+
+Glossary
+- DOI: Digital Object Identifier used to uniquely identify papers
+- ISSN: International Standard Serial Number for journals
+- Special Issue: a themed issue curated by guest editors
+
+Credits
+- Company: Aethex
+- Built by: Maaz Ahmad, Shariq Hashme
+
+Need Help?
+- Use the WordPress.org plugin support forum
+- Include WordPress version, plugin version, steps to reproduce, and screenshots when possible
+
+End

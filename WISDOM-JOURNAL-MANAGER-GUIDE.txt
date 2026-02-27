@@ -1,0 +1,570 @@
+Wisdom Journal Manager — Complete User Guide
+Version 1.0.0 | By Aethex (http://aethexweb.com)
+Built by: Maaz Ahmad, Shariq Hashme
+=======================================================
+
+
+INTRODUCTION
+------------
+Wisdom Journal Manager is the World's First Affordable Journal Manager for WordPress. It gives universities, research departments, and independent publishers a complete academic publishing platform — covering the full hierarchy of Journals, Issues, Papers, and Authors — with editorial workflow, automated citation tracking, and enterprise-grade security.
+
+This guide covers everything from initial installation to day-to-day editorial operations.
+
+
+WHO SHOULD READ THIS GUIDE
+---------------------------
+- Editors-in-Chief and Managing Editors
+- Section and Guest Editors
+- Copy/Layout Editors
+- Reviewers
+- Authors submitting or managing papers
+- Site Administrators managing the plugin
+- Developers extending or customizing the plugin
+
+
+SYSTEM REQUIREMENTS
+-------------------
+- WordPress 5.0 or higher (tested up to 6.7)
+- PHP 7.4 or higher (with curl and json extensions)
+- MySQL 5.6 or higher (or compatible MariaDB)
+- Server memory: 256 MB minimum, 512 MB recommended
+- HTTPS strongly recommended for all admin work
+
+
+INSTALLATION
+------------
+1. In WordPress Admin, go to Plugins → Add New → Upload Plugin.
+2. Select the plugin ZIP file and click Install Now.
+3. Click Activate Plugin.
+4. Go to Journals → Plugin Verification to confirm all components are working.
+5. Go to Journals → User Roles to assign roles to your team.
+6. Optionally, go to Journals → Automation to configure API keys and citation updates.
+
+To upgrade: deactivate the old version, upload the new ZIP, and reactivate.
+Always back up your database and files before upgrading.
+
+To uninstall: deactivating keeps all your data intact.
+Deleting via the Plugins page removes plugin settings and scheduled tasks;
+your content (journals, issues, papers, authors) remains in the database.
+
+
+10-MINUTE QUICK START
+---------------------
+1. Go to Journals → Add New — create your first Journal (title, ISSN, publisher, editors).
+2. Go to Issues → Add New — create an Issue linked to your Journal (year, volume/number).
+3. Go to Papers → Add New — add a Paper (title, authors, DOI if available, PDF link).
+4. Go to Authors — create Author profiles and link them to papers.
+5. Create a WordPress Page and add [journals] to display your journal listing.
+6. Go to Journals → Automation and enable citation updates.
+
+
+WHERE TO FIND EVERYTHING (ADMIN MENU)
+--------------------------------------
+Journals → Journals          List and manage all journals
+Journals → Add New           Create a new journal
+Journals → Issues            List and manage all issues
+Journals → Papers            List and manage all papers
+Journals → Authors           Author profiles and directory
+Journals → Automation        Citation/view update settings and manual runs
+Journals → Security Log      Security event audit trail
+Journals → Rate Limits       View usage and remaining quotas
+Journals → Plugin Verification  Self-check panel for all plugin components
+Journals → Import/Export     Data migration and backup tools
+
+
+HOW YOUR DATA IS ORGANIZED
+---------------------------
+The plugin uses a clean three-level hierarchy:
+
+  Journals  (top level — the publication brand)
+      └── Issues  (publication units — volume/number or special issues)
+              └── Papers  (the scholarly content)
+
+Authors are separate profiles linked to papers with order and corresponding-author designation.
+
+This hierarchy enables:
+- Filtering papers by journal, issue, author, year, keyword, or type
+- Correct breadcrumb navigation on each single-view page
+- Clean relationships in import/export and automation
+
+
+USER ROLES AND PERMISSIONS
+---------------------------
+The plugin creates four custom roles alongside standard WordPress roles:
+
+Role                    | Capabilities
+------------------------|------------------------------------------------------
+Journal Editor-in-Chief | Full editorial control over all journals and issues
+Journal Editor          | Manage issues and papers; run automation
+Journal Reviewer        | Read and review access
+Journal Author          | Submit and manage own papers
+
+Rate limits (API calls and data fetches per hour) are role-based:
+  Student        50 API calls, 30 data fetches/hour
+  Researcher    100 API calls, 60 data fetches/hour
+  Editor        200 API calls, 120 data fetches/hour
+  Administrator 500 API calls, 300 data fetches/hour
+
+Assign roles at Journals → User Roles.
+View current usage at Journals → Rate Limits.
+
+
+JOURNALS: THE PUBLICATION CONTAINER
+-------------------------------------
+Create at: Journals → Add New
+
+Identification:
+  Name (post title)         The journal's full name
+  ISSN                      International Standard Serial Number (print or online)
+  Publisher                 Publishing organization or institution
+  Founding year             Year the journal was established
+  Frequency                 e.g. Quarterly, Biannual, Continuous
+  Language                  Primary language of publication
+  Subject areas             Comma-separated subject/discipline tags
+  Impact factor             Optional; leave blank if not applicable
+
+Online & Access:
+  Website                   Journal's official URL
+  Contact email             Editorial contact address
+  Open Access               Toggle — marks this as an OA journal
+  Peer Reviewed             Toggle — marks this as peer-reviewed
+  DOI prefix                e.g. 10.12345 — used when assigning DOIs to papers
+
+Indexing:
+  CrossRef, Semantic Scholar, Scopus — flag which indexes list this journal
+
+Branding:
+  Logo                      Upload a journal logo (shown on frontend pages)
+  Cover image               Upload a cover image
+
+Editorial Board:
+  Editor-in-Chief           Primary editor; select from WordPress users
+  Managing Editor           Day-to-day manager
+  Copy Editors              List of copyeditors assigned to this journal
+  Layout Editors            List of layout editors
+
+Frontend display:
+  Each journal has its own single-view page (Journal → Page).
+  Use [journals] on any Page to display a listing of all journals.
+
+
+ISSUES: PUBLICATION UNITS
+--------------------------
+Create at: Issues → Add New
+
+Required:
+  Journal                   Select the parent journal (required)
+  Volume                    Volume number (e.g. 5)
+  Issue number              Issue number within the volume (e.g. 2)
+  Year                      Publication year
+
+Optional:
+  Publication date          Exact date published
+  Special Issue             Toggle — marks as a special/themed issue
+  Special issue title       Custom title for the special issue theme
+  Keywords                  Comma-separated keywords for this issue
+  Abstract/Summary          Issue-level editorial summary
+  Cover image               Issue cover artwork
+  Full-issue PDF URL        Link to a complete PDF of the issue
+  Total papers              Informational count of papers in this issue
+
+Editorial:
+  Guest editors             External editors for special issues
+  Issue editors             Editors responsible for this issue
+  Reviewers                 Assigned reviewers
+  Copy editors              Copyeditors for this issue
+  Layout editors            Layout staff for this issue
+
+Frontend display:
+  Each issue has its own single-view page with breadcrumb (Journal > Issue).
+  Use [issues] on any Page to display an issue listing.
+
+
+PAPERS: SCHOLARLY CONTENT
+--------------------------
+Create at: Papers → Add New
+
+Identification:
+  Title (post title)        The paper's full title
+  DOI                       Digital Object Identifier (optional but recommended)
+  Paper type                e.g. Research Article, Review, Case Report, Letter
+  Keywords                  Comma-separated keywords
+  Page range                e.g. 1–15 or 101–120
+
+Relationships:
+  Journal                   Select the parent journal
+  Issue                     Select the parent issue
+
+Dates:
+  Submission date           When the paper was first submitted
+  Acceptance date           When the paper was formally accepted
+  Publication date          When the paper was published online or in print
+
+Content:
+  Abstract                  Full paper abstract
+  PDF URL                   Direct link to the published PDF
+  Manuscript URL            Link to a manuscript or preprint file
+
+Flags:
+  Open Access               Toggle — marks this paper as freely available
+  Peer Reviewed             Toggle — marks as peer-reviewed
+
+Authors:
+  Structured author data — for each author:
+    First name, Last name, Email (optional), ORCID (optional)
+    Affiliation, Website (optional), Bio (optional)
+    Display order           Controls the order authors appear
+    Corresponding author    Flag the corresponding author
+
+Versioning:
+  Add version entries with: version number, version type, date, notes
+  Full version history is displayed on the frontend paper page
+  Each version can have its own DOI, download file, and open access flag
+
+Compliance:
+  Funding statement         Funding sources and grant numbers
+  Conflicts of interest     Disclosure statement
+  Ethics approval           Toggle + committee name + approval number(s)
+  Data availability         Statement about data availability
+
+Rights:
+  Copyright holder          Name of copyright holder
+  Copyright year            Year of copyright
+  License type              e.g. CC BY 4.0, All rights reserved
+  License URL               Link to the license text
+  Reuse permissions         Additional permissions statement
+
+Publication lifecycle:
+  Submission status         Current status in the workflow
+  Tracking history          Timestamped record of status changes and notes
+  Corrections/Errata        History of corrections to the published paper
+  Retraction notice         If applicable
+
+Metrics:
+  Citation count            Updated by Automation; can be set manually
+  View count                Updated by Automation; can be set manually
+  Last updated              Timestamp of last automation run for this paper
+
+Frontend display:
+  Each paper has its own single-view page with breadcrumb (Journal > Issue > Paper).
+  The page displays: abstract, metadata grid, author cards, download buttons, version history.
+  Use [papers] on any Page for a listing of papers.
+
+
+AUTHORS: PROFILES AND ATTRIBUTION
+-----------------------------------
+Create at: Journals → Authors → Add New
+
+Fields:
+  First name                Required
+  Last name                 Required
+  Email                     Optional — used for correspondence
+  Affiliation               Institutional affiliation
+  Bio                       Short biographical paragraph
+  Website                   Author's personal or institutional website
+  ORCID                     e.g. 0000-0002-1825-0097 (without the URL prefix)
+
+Linking to Papers:
+  Authors are added to papers via the Paper edit screen.
+  Each link records: display order, corresponding-author flag.
+
+Frontend display:
+  Each author has a profile page at their post URL.
+  Use [wjm_author_profile id="42"] on any Page to embed a profile.
+  The profile shows: photo, bio, affiliation, ORCID, publications list.
+
+
+EDITORIAL WORKFLOW
+------------------
+Typical paper lifecycle:
+  Submission → Under Review → Decision → Revisions → Accepted → Copy/Layout → Published
+
+Tracking: Update the paper's Submission Status field as it moves through stages.
+Each status change is recorded in Tracking History with a timestamp and optional notes.
+
+Best practices:
+  - Keep decision notes concise and factual.
+  - Record acceptance and publication dates accurately — they appear on the frontend.
+  - Use the Corrections/Errata field for any post-publication changes.
+  - Assign the correct editors and reviewers at the Issue level so they appear on the issue page.
+
+
+AUTOMATION AND ACADEMIC API INTEGRATIONS
+-----------------------------------------
+Location: Journals → Automation
+
+Purpose: Automatically retrieve citation counts and metadata for your papers from academic databases.
+
+Supported sources:
+  CrossRef           Free; uses DOI to fetch citation data. Best for DOI-assigned papers.
+  Semantic Scholar   Free; searches by title and author.
+  arXiv              Free; for preprint and cross-listed papers.
+  Scopus             Premium; requires API key from Elsevier.
+  Web of Science     Premium; requires API key from Clarivate.
+
+Setup:
+  1. Go to Journals → Automation.
+  2. Toggle "Enable Automation" to on.
+  3. Select your update frequency (daily, weekly, monthly).
+  4. Select which sources to use.
+  5. For Scopus or Web of Science, enter your API key and click Save.
+     Keys are encrypted before storage and never displayed in plain text.
+  6. Click "Update All Papers" to run a manual update immediately.
+
+Per-paper updates:
+  Open any paper's edit screen and click "Update This Paper"
+  to fetch fresh data for just that paper.
+
+Reliability:
+  - API timeouts and errors are handled gracefully; failed updates are logged.
+  - Existing local data is preserved unless the incoming data is valid and newer.
+  - Rate limits protect your site and the API providers.
+
+
+FRONTEND SHORTCODES
+-------------------
+Place these shortcodes on any WordPress Page or Post.
+
+[journals]
+  Display all journals.
+
+[journals layout="grid|list" publisher="Aethex" open_access="1" peer_reviewed="1" year="2020" per_page="12"]
+  Filtered journal listing.
+  Attributes:
+    layout          grid (default) or list
+    publisher       Filter by publisher name
+    open_access     1 = open access only
+    peer_reviewed   1 = peer-reviewed only
+    year            Filter by founding year
+    per_page        Results per page (default 12)
+
+[issues]
+  Display all issues.
+
+[issues journal_id="123" volume="5" year="2024" special_issue="1" per_page="12"]
+  Filtered issue listing.
+  Attributes:
+    journal_id      Filter by journal (use the journal's post ID)
+    volume          Filter by volume number
+    year            Filter by publication year
+    special_issue   1 = special issues only
+    per_page        Results per page (default 12)
+
+[papers]
+  Display all papers.
+
+[papers journal_id="123" issue_id="456" paper_type="Research Article" author="Lovelace" keyword="Automation" year="2024" per_page="24"]
+  Filtered paper listing.
+  Attributes:
+    journal_id      Filter by journal
+    issue_id        Filter by issue
+    paper_type      Filter by paper type (exact match)
+    author          Filter by author surname (partial match)
+    keyword         Filter by keyword (partial match)
+    year            Filter by publication year
+    per_page        Results per page (default 12)
+
+[wjm_author_profile id="42"]
+  Embed a single author's profile. Replace 42 with the author's post ID.
+  Shows: name, photo (if set), affiliation, ORCID, bio, and linked publications.
+
+
+FRONTEND SINGLE-VIEW PAGES
+---------------------------
+Each custom post type has an automatically generated single-view page:
+
+Journal page:  Displays journal info, editorial board, and a list of issues.
+Issue page:    Displays issue metadata, editorial team, and papers in this issue.
+Paper page:    Displays full paper details — abstract, metadata grid, author cards,
+               download buttons, version history, compliance info, and license.
+Author page:   Displays the author's profile — bio, affiliation, ORCID, and publications.
+
+All single-view pages include:
+- Breadcrumb navigation (e.g. Journals > Journal Name > Issue > Paper Title)
+- Clean minimal academic design (white background, blue accent)
+- Responsive layout for desktop, tablet, and mobile
+
+The plugin loads its CSS only on these pages, not sitewide.
+
+
+IMPORT AND EXPORT
+-----------------
+Location: Journals → Import/Export
+
+Export:
+  Select the content type (Journals, Issues, or Papers) and format (CSV, JSON, XML).
+  Click Export to download the file.
+
+Import:
+  1. Download the sample template for the content type you want to import.
+  2. Fill in the template with your data.
+  3. Upload the completed file and click Import.
+  4. Required fields are validated; errors are reported per row.
+
+Tips:
+  - Import journals before issues; import issues before papers (to satisfy relationships).
+  - Use batches of 50–100 rows on hosts with limited PHP memory.
+  - Increase PHP upload_max_filesize and post_max_size for larger files.
+
+
+SECURITY: WHAT THE PLUGIN DOES TO PROTECT YOU
+-----------------------------------------------
+* All inputs are validated and sanitized before storage.
+* All outputs are escaped for their HTML context before display.
+* All form submissions are protected with CSRF nonces.
+* All database queries use prepared statements (no SQL injection risk).
+* API keys are encrypted with AES-256-CBC using WordPress secret keys/salts.
+  They are never stored or displayed in plain text.
+* Every admin action verifies the current user has the required capability.
+* High-cost operations (API calls, data fetches) are rate-limited by role.
+* All security events are logged at Journals → Security Log with severity,
+  user, IP address, and timestamp.
+
+Recommended practices:
+  - Run WordPress over HTTPS.
+  - Keep WordPress core, PHP, and all plugins updated.
+  - Use strong passwords and enable two-factor authentication for admin accounts.
+  - Review the Security Log regularly for unusual activity.
+  - Restrict admin access by IP where possible.
+
+
+PLUGIN VERIFICATION
+--------------------
+Location: Journals → Plugin Verification
+
+Runs a self-check on all plugin components:
+- Custom post types registered correctly
+- Database tables present and correctly structured
+- Meta boxes loading without errors
+- Shortcodes registered
+- CSS and JS assets present
+- Automation system reachable
+
+Run this after installation or after an upgrade to confirm everything is working.
+
+
+TROUBLESHOOTING
+---------------
+Problem: Journals menu not visible.
+Fix: Confirm your WordPress user has at least Editor capabilities.
+     Check Journals → User Roles for your role assignment.
+
+Problem: "Attempt to read property 'ID' on null" notice.
+Fix: Open Papers via Journals → Papers rather than a direct post URL.
+     This is handled in the current version.
+
+Problem: Citations not updating.
+Fix: 1. Enable Automation at Journals → Automation.
+     2. Verify API credentials are saved (re-enter and save if unsure).
+     3. Check Journals → Rate Limits — wait for the hourly reset if limits are exceeded.
+     4. Check Journals → Security Log for blocked or failed requests.
+
+Problem: Import fails.
+Fix: Download the sample template and compare your file's headers exactly.
+     Ensure all required fields are present.
+     Try a smaller batch (50 rows).
+     Check PHP upload_max_filesize with your hosting provider.
+
+Problem: Frontend pages have no styling.
+Fix: The plugin CSS loads only on journal/issue/paper/author pages, not globally.
+     If your theme overrides styles, add more specific CSS rules in your theme's
+     custom CSS area (use .sjm-single-container as a parent selector).
+
+Problem: API keys show as invalid after saving.
+Fix: Keys are encrypted on save. Re-enter the key in full and save again.
+     Check that your server can reach the API domain (no firewall/proxy blocks).
+
+
+PERFORMANCE TIPS
+----------------
+- Enable page caching (WP Rocket, W3 Total Cache, etc.) for shortcode listing pages.
+- Set automation frequency to weekly unless daily updates are critical.
+- Use shortcode filters and pagination — avoid loading 500 papers on one page.
+- Use the subject area and year filters when browsing large journal portfolios.
+- The author table (wp_sjm_authors) is separate from WordPress posts for fast queries.
+
+
+PRIVACY AND COMPLIANCE
+-----------------------
+- Data stored: journals, issues, papers, author profiles, security logs.
+- External requests: only to selected academic APIs (CrossRef, Semantic Scholar, arXiv,
+  and optionally Scopus/Web of Science). Requests come from your server, not from user browsers.
+- No telemetry: the plugin does not send usage data anywhere.
+- To handle data subject requests (GDPR/privacy), use WordPress built-in tools:
+  Tools → Export Personal Data and Tools → Erase Personal Data.
+- Publish a site-level privacy notice describing what author and user data you collect.
+
+
+GETTING HELP
+------------
+WordPress.org support forum:
+  https://wordpress.org/support/plugin/wisdom-journal-manager/
+
+Aethex website:
+  http://aethexweb.com
+
+Built-in tools:
+  Journals → Plugin Verification (self-check)
+  Journals → Security Log (event audit trail)
+
+When seeking support, please include:
+  - WordPress version
+  - Plugin version (1.0.0)
+  - PHP version
+  - Steps to reproduce the issue
+  - Any error messages from the Security Log or PHP error log
+
+
+GLOSSARY
+--------
+DOI         Digital Object Identifier — a unique persistent identifier for papers
+             (e.g. 10.1234/example.2024.001)
+ISSN        International Standard Serial Number — unique identifier for journals
+             (e.g. 2345-6789)
+ORCID       Open Researcher and Contributor ID — persistent identifier for authors
+             (e.g. 0000-0002-1825-0097)
+Special Issue  A themed issue coordinated by guest editors on a specific topic
+OA          Open Access — papers freely available to read without subscription
+CPT         Custom Post Type — WordPress mechanism used for journals, issues, papers, authors
+Preprint    Early version of a research paper before formal peer review
+
+
+DATA MODEL REFERENCE
+---------------------
+Custom Post Types:
+  journal           Journal records
+  journal_issue     Issue records
+  paper             Paper records
+  wjm_author        Author profile records
+
+Database Tables (in addition to standard WordPress tables):
+  wp_sjm_authors    Author profiles
+    Columns: id, first_name, last_name, email, affiliation, bio, website, orcid,
+             created_at, updated_at
+
+Key Post Meta Keys:
+  Journal:  _sjm_issn, _sjm_publisher, _sjm_founding_year, _sjm_frequency,
+            _sjm_language, _sjm_subject_areas, _sjm_impact_factor,
+            _sjm_open_access, _sjm_peer_reviewed, _sjm_doi_prefix,
+            _sjm_eic, _sjm_managing_editor
+  Issue:    _sjm_issue_journal, _sjm_issue_volume, _sjm_issue_number,
+            _sjm_issue_year, _sjm_issue_date, _sjm_special_issue,
+            _sjm_special_issue_title, _sjm_issue_pdf_url, _sjm_issue_cover
+  Paper:    _sjm_paper_journal, _sjm_paper_issue, _sjm_paper_doi,
+            _sjm_paper_type, _sjm_paper_authors, _sjm_paper_pdf_url,
+            _sjm_paper_manuscript_url, _sjm_open_access, _sjm_version_history,
+            _sjm_citation_count, _sjm_views_count, _sjm_submission_date,
+            _sjm_acceptance_date, _sjm_funding, _sjm_coi, _sjm_ethics_approval
+
+
+CREDITS
+-------
+Company   : Aethex
+Website   : http://aethexweb.com
+Authors   : Maaz Ahmad, Shariq Hashme
+License   : GPL v2 or later
+            https://www.gnu.org/licenses/gpl-2.0.html
+
+Built following WordPress coding standards and security best practices.
+
+=== END OF GUIDE ===

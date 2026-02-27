@@ -1,0 +1,546 @@
+# Copyright (C) 2024 Wisdom Journal Manager
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Wisdom Journal Manager 1.0\n"
+"Report-Msgid-Bugs-To: https://aethex.online\n"
+"POT-Creation-Date: 2024-01-01 00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: WordPress\n"
+
+#. Plugin Name of the plugin/theme
+msgid "Wisdom Journal Manager"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://aethex.online"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A comprehensive academic publishing platform for WordPress with advanced workflow management, real-world versioning systems, and professional academic compliance features."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Aethex"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://aethex.online"
+msgstr ""
+
+# Common terms
+msgid "Journal"
+msgstr ""
+
+msgid "Journals"
+msgstr ""
+
+msgid "Paper"
+msgstr ""
+
+msgid "Papers"
+msgstr ""
+
+msgid "Issue"
+msgstr ""
+
+msgid "Issues"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Authors"
+msgstr ""
+
+msgid "Add New"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Analytics"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Email Settings"
+msgstr ""
+
+msgid "User Roles"
+msgstr ""
+
+msgid "Security Log"
+msgstr ""
+
+msgid "Workflow Guide"
+msgstr ""
+
+msgid "Plugin Guide"
+msgstr ""
+
+# Form labels
+msgid "Title"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "ISSN"
+msgstr ""
+
+msgid "Publisher"
+msgstr ""
+
+msgid "DOI"
+msgstr ""
+
+msgid "Abstract"
+msgstr ""
+
+msgid "Keywords"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Volume"
+msgstr ""
+
+msgid "Number"
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Open Access"
+msgstr ""
+
+msgid "Peer Reviewed"
+msgstr ""
+
+msgid "Impact Factor"
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "ORCID"
+msgstr ""
+
+msgid "Affiliation"
+msgstr ""
+
+msgid "First Name"
+msgstr ""
+
+msgid "Last Name"
+msgstr ""
+
+msgid "Biography"
+msgstr ""
+
+# Status messages
+msgid "Successfully saved."
+msgstr ""
+
+msgid "Successfully deleted."
+msgstr ""
+
+msgid "Error occurred while saving."
+msgstr ""
+
+msgid "Error occurred while deleting."
+msgstr ""
+
+msgid "No items found."
+msgstr ""
+
+msgid "Item not found."
+msgstr ""
+
+msgid "Permission denied."
+msgstr ""
+
+msgid "Invalid data provided."
+msgstr ""
+
+# Buttons
+msgid "Add New Journal"
+msgstr ""
+
+msgid "Add New Paper"
+msgstr ""
+
+msgid "Add New Issue"
+msgstr ""
+
+msgid "Add New Author"
+msgstr ""
+
+msgid "View Journal"
+msgstr ""
+
+msgid "View Paper"
+msgstr ""
+
+msgid "View Issue"
+msgstr ""
+
+msgid "View Author"
+msgstr ""
+
+msgid "Edit Journal"
+msgstr ""
+
+msgid "Edit Paper"
+msgstr ""
+
+msgid "Edit Issue"
+msgstr ""
+
+msgid "Edit Author"
+msgstr ""
+
+msgid "Delete Journal"
+msgstr ""
+
+msgid "Delete Paper"
+msgstr ""
+
+msgid "Delete Issue"
+msgstr ""
+
+msgid "Delete Author"
+msgstr ""
+
+msgid "Search Journals"
+msgstr ""
+
+msgid "Search Papers"
+msgstr ""
+
+msgid "Search Issues"
+msgstr ""
+
+msgid "Search Authors"
+msgstr ""
+
+msgid "Filter by Journal"
+msgstr ""
+
+msgid "Filter by Year"
+msgstr ""
+
+msgid "Filter by Author"
+msgstr ""
+
+msgid "Filter by Type"
+msgstr ""
+
+msgid "All Journals"
+msgstr ""
+
+msgid "All Papers"
+msgstr ""
+
+msgid "All Issues"
+msgstr ""
+
+msgid "All Authors"
+msgstr ""
+
+msgid "Recent Posts"
+msgstr ""
+
+msgid "Recent Comments"
+msgstr ""
+
+msgid "Archives"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "No comments to show."
+msgstr ""
+
+msgid "No archives to show."
+msgstr ""
+
+msgid "No categories"
+msgstr ""
+
+# Academic terms
+msgid "Research Article"
+msgstr ""
+
+msgid "Review Article"
+msgstr ""
+
+msgid "Case Study"
+msgstr ""
+
+msgid "Editorial"
+msgstr ""
+
+msgid "Letter to Editor"
+msgstr ""
+
+msgid "Book Review"
+msgstr ""
+
+msgid "Conference Paper"
+msgstr ""
+
+msgid "Technical Report"
+msgstr ""
+
+msgid "Thesis"
+msgstr ""
+
+msgid "Dissertation"
+msgstr ""
+
+msgid "Preprint"
+msgstr ""
+
+msgid "Working Paper"
+msgstr ""
+
+msgid "Special Issue"
+msgstr ""
+
+msgid "Regular Issue"
+msgstr ""
+
+msgid "Submission"
+msgstr ""
+
+msgid "Under Review"
+msgstr ""
+
+msgid "Accepted"
+msgstr ""
+
+msgid "Published"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Withdrawn"
+msgstr ""
+
+msgid "Retracted"
+msgstr ""
+
+# User roles
+msgid "Editor-in-Chief"
+msgstr ""
+
+msgid "Managing Editor"
+msgstr ""
+
+msgid "Guest Editor"
+msgstr ""
+
+msgid "Reviewer"
+msgstr ""
+
+msgid "Copyeditor"
+msgstr ""
+
+msgid "Proofreader"
+msgstr ""
+
+msgid "Layout Editor"
+msgstr ""
+
+msgid "Journal Author"
+msgstr ""
+
+# Notifications
+msgid "New paper submitted"
+msgstr ""
+
+msgid "Paper accepted"
+msgstr ""
+
+msgid "Paper published"
+msgstr ""
+
+msgid "Review requested"
+msgstr ""
+
+msgid "Review completed"
+msgstr ""
+
+msgid "Issue published"
+msgstr ""
+
+msgid "Journal updated"
+msgstr ""
+
+# Time/Date
+msgid "Today"
+msgstr ""
+
+msgid "Yesterday"
+msgstr ""
+
+msgid "This Week"
+msgstr ""
+
+msgid "This Month"
+msgstr ""
+
+msgid "This Year"
+msgstr ""
+
+msgid "Last Week"
+msgstr ""
+
+msgid "Last Month"
+msgstr ""
+
+msgid "Last Year"
+msgstr ""
+
+msgid "Date Range"
+msgstr ""
+
+msgid "From"
+msgstr ""
+
+msgid "To"
+msgstr ""
+
+# Statistics
+msgid "Total Journals"
+msgstr ""
+
+msgid "Total Papers"
+msgstr ""
+
+msgid "Total Issues"
+msgstr ""
+
+msgid "Total Authors"
+msgstr ""
+
+msgid "Published Papers"
+msgstr ""
+
+msgid "Submitted Papers"
+msgstr ""
+
+msgid "Under Review"
+msgstr ""
+
+msgid "Views"
+msgstr ""
+
+msgid "Downloads"
+msgstr ""
+
+msgid "Citations"
+msgstr ""
+
+# Error messages
+msgid "Required field missing"
+msgstr ""
+
+msgid "Invalid email address"
+msgstr ""
+
+msgid "Invalid URL"
+msgstr ""
+
+msgid "Invalid date format"
+msgstr ""
+
+msgid "File upload failed"
+msgstr ""
+
+msgid "File type not allowed"
+msgstr ""
+
+msgid "File size too large"
+msgstr ""
+
+msgid "Database error"
+msgstr ""
+
+msgid "Network error"
+msgstr ""
+
+msgid "Timeout error"
+msgstr ""
+
+# Success messages
+msgid "Journal created successfully"
+msgstr ""
+
+msgid "Paper submitted successfully"
+msgstr ""
+
+msgid "Issue published successfully"
+msgstr ""
+
+msgid "Author added successfully"
+msgstr ""
+
+msgid "Settings saved successfully"
+msgstr ""
+
+msgid "Data exported successfully"
+msgstr ""
+
+msgid "Data imported successfully"
+msgstr ""
+
+msgid "Email sent successfully"
+msgstr ""
+
+msgid "File uploaded successfully"
+msgstr ""
+
+msgid "Changes saved successfully"
+msgstr "" 

@@ -1,0 +1,976 @@
+/*
+ * Academic Shortcodes CSS — Professional Editorial Design
+ * For Wisdom Journal Manager Plugin
+ */
+
+/* ============================================================================
+   GLOBAL VARIABLES & RESET
+   ============================================================================ */
+
+:root {
+    /* Professional Academic Color Palette — deep navy primary */
+    --sjm-primary: #1e3a5f;
+    --sjm-primary-light: #2d5282;
+    --sjm-primary-dark: #12253d;
+    --sjm-secondary: #059669;
+    --sjm-accent: #dc2626;
+    --sjm-warning: #f59e0b;
+
+    /* Neutral Grays */
+    --sjm-gray-50: #fafaf9;
+    --sjm-gray-100: #f5f5f4;
+    --sjm-gray-200: #e7e5e4;
+    --sjm-gray-300: #d6d3d1;
+    --sjm-gray-400: #a8a29e;
+    --sjm-gray-500: #78716c;
+    --sjm-gray-600: #57534e;
+    --sjm-gray-700: #44403c;
+    --sjm-gray-800: #292524;
+    --sjm-gray-900: #1c1917;
+
+    /* Status Colors */
+    --sjm-success: #059669;
+    --sjm-success-light: #10b981;
+    --sjm-success-bg: #d1fae5;
+
+    --sjm-info: #1e3a5f;
+    --sjm-info-light: #6b9cc8;
+    --sjm-info-bg: #e8f0f8;
+
+    --sjm-warning-bg: #fef3c7;
+    --sjm-error-bg: #fee2e2;
+
+    /* Typography */
+    --sjm-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    --sjm-font-serif: "Georgia", "Times New Roman", Times, serif;
+
+    /* Subtle Shadows */
+    --sjm-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --sjm-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --sjm-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --sjm-shadow-md: 0 6px 14px -2px rgba(0, 0, 0, 0.09), 0 3px 6px -2px rgba(0, 0, 0, 0.05);
+    --sjm-shadow-lg: 0 12px 20px -4px rgba(0, 0, 0, 0.1), 0 6px 8px -4px rgba(0, 0, 0, 0.04);
+    --sjm-shadow-xl: 0 20px 32px -8px rgba(0, 0, 0, 0.12);
+
+    /* Border Radius — tight & professional, no bubbly look */
+    --sjm-radius-sm: 4px;
+    --sjm-radius: 6px;
+    --sjm-radius-md: 8px;
+    --sjm-radius-lg: 10px;
+    --sjm-radius-xl: 12px;
+
+    /* Transitions */
+    --sjm-transition: all 0.18s ease;
+    --sjm-transition-fast: all 0.12s ease;
+    --sjm-transition-slow: all 0.28s ease;
+
+    /* Spacing */
+    --sjm-space-xs: 4px;
+    --sjm-space-sm: 8px;
+    --sjm-space-md: 16px;
+    --sjm-space-lg: 24px;
+    --sjm-space-xl: 32px;
+    --sjm-space-2xl: 48px;
+    --sjm-space-3xl: 64px;
+}
+
+/* ============================================================================
+   CONTAINER & LAYOUT
+   ============================================================================ */
+
+.sjm-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--sjm-space-3xl) var(--sjm-space-lg);
+    font-family: var(--sjm-font-family);
+    line-height: 1.6;
+    color: var(--sjm-gray-800);
+}
+
+/* Page Header */
+.sjm-page-header {
+    margin-bottom: var(--sjm-space-3xl);
+    text-align: center;
+}
+
+.sjm-page-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--sjm-gray-900);
+    margin: 0 0 12px 0;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.sjm-page-subtitle {
+    font-size: 17px;
+    color: var(--sjm-gray-600);
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.sjm-page-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--sjm-space-xl);
+    margin-top: var(--sjm-space-lg);
+    padding-top: var(--sjm-space-lg);
+    border-top: 1px solid var(--sjm-gray-200);
+}
+
+.sjm-stat-item {
+    text-align: center;
+}
+
+.sjm-stat-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.sjm-stat-label {
+    font-size: 12px;
+    color: var(--sjm-gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+/* ============================================================================
+   FILTER SYSTEM
+   ============================================================================ */
+
+.sjm-filters {
+    background: #ffffff;
+    border: 1px solid var(--sjm-gray-200);
+    border-radius: var(--sjm-radius-sm);
+    padding: var(--sjm-space-xl);
+    margin-bottom: var(--sjm-space-2xl);
+    box-shadow: var(--sjm-shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.sjm-filters::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--sjm-primary);
+}
+
+.sjm-filters-header {
+    margin-bottom: var(--sjm-space-lg);
+}
+
+.sjm-filters-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--sjm-gray-900);
+    margin: 0 0 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sjm-filters-subtitle {
+    font-size: 13px;
+    color: var(--sjm-gray-600);
+    margin: 0;
+}
+
+.sjm-filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.sjm-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sjm-filter-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--sjm-gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-filter-input,
+.sjm-filter-select {
+    padding: 8px 10px;
+    border: 1px solid var(--sjm-gray-300);
+    border-radius: var(--sjm-radius-sm);
+    font-size: 14px;
+    color: var(--sjm-gray-700);
+    background: #ffffff;
+    transition: var(--sjm-transition);
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-filter-input:focus,
+.sjm-filter-select:focus {
+    outline: none;
+    border-color: var(--sjm-primary);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+}
+
+.sjm-filter-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 16px;
+    border-top: 1px solid var(--sjm-gray-200);
+}
+
+.sjm-filter-button {
+    padding: 8px 18px;
+    border: 1px solid var(--sjm-gray-300);
+    border-radius: var(--sjm-radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--sjm-gray-700);
+    background: #ffffff;
+    cursor: pointer;
+    transition: var(--sjm-transition);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-filter-button:hover {
+    background: var(--sjm-gray-50);
+    border-color: var(--sjm-gray-400);
+    text-decoration: none;
+}
+
+.sjm-filter-button-primary {
+    background: var(--sjm-primary);
+    border-color: var(--sjm-primary);
+    color: #ffffff;
+}
+
+.sjm-filter-button-primary:hover {
+    background: var(--sjm-primary-dark);
+    border-color: var(--sjm-primary-dark);
+    color: #ffffff;
+}
+
+/* ============================================================================
+   GRID LAYOUT
+   ============================================================================ */
+
+.sjm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--sjm-space-lg);
+    margin: var(--sjm-space-2xl) 0;
+}
+
+.sjm-grid-compact {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--sjm-space-md);
+}
+
+/* ============================================================================
+   LIST LAYOUT
+   ============================================================================ */
+
+.sjm-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 28px 0;
+}
+
+/* ============================================================================
+   CARD COMPONENTS
+   ============================================================================ */
+
+.sjm-card {
+    background: #ffffff;
+    border: 1px solid var(--sjm-gray-200);
+    border-radius: var(--sjm-radius-sm);
+    overflow: hidden;
+    transition: var(--sjm-transition);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: var(--sjm-shadow-xs);
+    height: 100%;
+}
+
+.sjm-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--sjm-primary);
+    opacity: 0;
+    transition: var(--sjm-transition);
+}
+
+.sjm-card:hover {
+    border-color: var(--sjm-gray-400);
+    box-shadow: var(--sjm-shadow-md);
+    text-decoration: none;
+}
+
+.sjm-card:hover::before {
+    opacity: 1;
+}
+
+.sjm-card-list {
+    background: #ffffff;
+    border: 1px solid var(--sjm-gray-200);
+    border-radius: var(--sjm-radius-sm);
+    overflow: hidden;
+    transition: var(--sjm-transition);
+    text-decoration: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    box-shadow: var(--sjm-shadow-xs);
+}
+
+.sjm-card-list:hover {
+    border-color: var(--sjm-gray-400);
+    box-shadow: var(--sjm-shadow);
+    text-decoration: none;
+}
+
+/* ============================================================================
+   COVER/THUMBNAIL COMPONENTS
+   ============================================================================ */
+
+.sjm-cover {
+    width: 100%;
+    height: 210px;
+    background: #1a2744;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.sjm-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--sjm-transition);
+}
+
+.sjm-card:hover .sjm-cover img {
+    transform: scale(1.03);
+}
+
+/* Placeholder: simulates a closed journal on a dark shelf */
+.sjm-cover-placeholder {
+    width: 62px;
+    height: 82px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top rule — like a journal title bar */
+.sjm-cover-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+/* Stacked horizontal lines simulating text rows */
+.sjm-cover-placeholder::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow:
+        0 8px 0 rgba(255, 255, 255, 0.28),
+        0 16px 0 rgba(255, 255, 255, 0.22),
+        0 24px 0 rgba(255, 255, 255, 0.18),
+        0 32px 0 rgba(255, 255, 255, 0.14),
+        0 40px 0 rgba(255, 255, 255, 0.1);
+}
+
+.sjm-cover-list {
+    width: 88px;
+    height: 108px;
+    background: var(--sjm-gray-100);
+    border-radius: var(--sjm-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    border: 1px solid var(--sjm-gray-200);
+}
+
+.sjm-cover-list img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--sjm-radius-sm);
+}
+
+/* ============================================================================
+   CONTENT COMPONENTS
+   ============================================================================ */
+
+.sjm-content {
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sjm-space-sm);
+    flex: 1;
+}
+
+.sjm-content-list {
+    flex: 1;
+    min-width: 0;
+    padding-right: var(--sjm-space-lg);
+}
+
+.sjm-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--sjm-gray-900);
+    margin: 0 0 4px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    font-family: var(--sjm-font-family);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.sjm-title-list {
+    font-size: 19px;
+    -webkit-line-clamp: 1;
+}
+
+.sjm-subtitle {
+    font-size: 12px;
+    color: var(--sjm-gray-600);
+    margin: 0 0 10px;
+    line-height: 1.5;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-description {
+    font-size: 13px;
+    color: var(--sjm-gray-600);
+    line-height: 1.6;
+    margin: 0 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.sjm-description-list {
+    -webkit-line-clamp: 2;
+    margin-bottom: 8px;
+}
+
+/* ============================================================================
+   BADGE SYSTEM
+   ============================================================================ */
+
+.sjm-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.sjm-badges-list {
+    margin-bottom: 8px;
+}
+
+.sjm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-badge-primary {
+    background: #e8f0f8;
+    color: var(--sjm-primary);
+    border: 1px solid #b8cee0;
+}
+
+.sjm-badge-success {
+    background: var(--sjm-success-bg);
+    color: var(--sjm-secondary);
+    border: 1px solid #6ee7b7;
+}
+
+.sjm-badge-warning {
+    background: var(--sjm-warning-bg);
+    color: #92400e;
+    border: 1px solid #fcd34d;
+}
+
+.sjm-badge-error {
+    background: var(--sjm-error-bg);
+    color: var(--sjm-accent);
+    border: 1px solid #fca5a5;
+}
+
+.sjm-badge-secondary {
+    background: var(--sjm-gray-100);
+    color: var(--sjm-gray-700);
+    border: 1px solid var(--sjm-gray-300);
+}
+
+/* ============================================================================
+   METADATA DISPLAY
+   ============================================================================ */
+
+.sjm-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--sjm-gray-500);
+}
+
+.sjm-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.sjm-meta-label {
+    font-weight: 500;
+    color: var(--sjm-gray-600);
+}
+
+.sjm-meta-value {
+    color: var(--sjm-gray-700);
+}
+
+/* ============================================================================
+   ACTION BUTTONS
+   ============================================================================ */
+
+.sjm-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 4px;
+}
+
+.sjm-actions-list {
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.sjm-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--sjm-gray-50);
+    border: 1px solid var(--sjm-gray-300);
+    border-radius: var(--sjm-radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sjm-gray-700);
+    text-decoration: none;
+    transition: var(--sjm-transition);
+    cursor: pointer;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-button:hover {
+    background: var(--sjm-gray-100);
+    border-color: var(--sjm-gray-400);
+    text-decoration: none;
+    box-shadow: var(--sjm-shadow-sm);
+}
+
+.sjm-button-primary {
+    background: var(--sjm-primary);
+    border-color: var(--sjm-primary);
+    color: #ffffff;
+}
+
+.sjm-button-primary:hover {
+    background: var(--sjm-primary-dark);
+    border-color: var(--sjm-primary-dark);
+    color: #ffffff;
+    box-shadow: var(--sjm-shadow-sm);
+}
+
+.sjm-button-large {
+    padding: 11px 26px;
+    font-size: 14px;
+}
+
+.sjm-button-icon, .sjm-view-button svg {
+    width: 14px !important;
+    height: 14px !important;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.sjm-button:hover .sjm-button-icon {
+    transform: translateX(2px);
+}
+
+.sjm-view-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 13px;
+    background: #ffffff;
+    border: 1px solid var(--sjm-gray-300);
+    border-radius: var(--sjm-radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sjm-primary);
+    text-decoration: none;
+    transition: var(--sjm-transition);
+    cursor: pointer;
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-view-button:hover {
+    background: var(--sjm-primary);
+    border-color: var(--sjm-primary);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.sjm-view-button:hover svg {
+    transform: translateX(2px);
+}
+
+/* ============================================================================
+   AUTHOR DISPLAY
+   ============================================================================ */
+
+.sjm-authors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.sjm-author {
+    font-size: 12px;
+    color: var(--sjm-gray-600);
+    font-weight: 500;
+}
+
+.sjm-author-link {
+    color: var(--sjm-primary);
+    text-decoration: none;
+    transition: var(--sjm-transition);
+}
+
+.sjm-author-link:hover {
+    color: var(--sjm-primary-dark);
+    text-decoration: underline;
+}
+
+/* ============================================================================
+   EMPTY STATE
+   ============================================================================ */
+
+.sjm-empty-state {
+    text-align: center;
+    padding: 64px 20px;
+    color: var(--sjm-gray-500);
+    font-family: var(--sjm-font-family);
+}
+
+.sjm-empty-state-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 16px;
+    opacity: 0.4;
+}
+
+.sjm-empty-state h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--sjm-gray-700);
+    margin: 0 0 8px 0;
+}
+
+.sjm-empty-state p {
+    font-size: 15px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ============================================================================
+   PAGINATION
+   ============================================================================ */
+
+.sjm-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--sjm-gray-200);
+}
+
+.sjm-pagination-button {
+    padding: 6px 13px;
+    border: 1px solid var(--sjm-gray-300);
+    border-radius: var(--sjm-radius-sm);
+    background: #ffffff;
+    color: var(--sjm-gray-700);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--sjm-transition);
+}
+
+.sjm-pagination-button:hover {
+    background: var(--sjm-gray-50);
+    border-color: var(--sjm-gray-400);
+    text-decoration: none;
+}
+
+.sjm-pagination-button.current {
+    background: var(--sjm-primary);
+    border-color: var(--sjm-primary);
+    color: #ffffff;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+    .sjm-container {
+        padding: 48px 20px;
+    }
+
+    .sjm-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 18px;
+    }
+
+    .sjm-filters-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .sjm-container {
+        padding: 32px 16px;
+    }
+
+    .sjm-page-title {
+        font-size: 26px;
+    }
+
+    .sjm-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 14px;
+        margin: 20px 0;
+    }
+
+    .sjm-list {
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .sjm-card-list {
+        flex-direction: column;
+        text-align: center;
+        gap: 14px;
+        padding: 16px;
+    }
+
+    .sjm-cover-list {
+        width: 70px;
+        height: 88px;
+        margin: 0 auto;
+    }
+
+    .sjm-content-list {
+        padding-right: 0;
+    }
+
+    .sjm-actions-list {
+        margin-left: 0;
+        margin-top: 12px;
+    }
+
+    .sjm-cover {
+        height: 170px;
+    }
+
+    .sjm-content {
+        padding: 14px 16px 16px;
+    }
+
+    .sjm-title {
+        font-size: 14px;
+    }
+
+    .sjm-title-list {
+        font-size: 16px;
+    }
+
+    .sjm-filters {
+        padding: 18px;
+    }
+
+    .sjm-filters-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .sjm-filter-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .sjm-filter-button {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .sjm-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .sjm-cover {
+        height: 150px;
+    }
+
+    .sjm-content {
+        padding: 12px 14px;
+    }
+
+    .sjm-title {
+        font-size: 14px;
+    }
+
+    .sjm-badges {
+        gap: 4px;
+    }
+
+    .sjm-badge {
+        font-size: 10px;
+        padding: 2px 7px;
+    }
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+
+@media print {
+    .sjm-filters,
+    .sjm-actions,
+    .sjm-button {
+        display: none !important;
+    }
+
+    .sjm-card,
+    .sjm-card-list {
+        border: 1px solid #000;
+        box-shadow: none;
+        break-inside: avoid;
+        margin-bottom: 20px;
+    }
+
+    .sjm-title {
+        color: #000;
+    }
+
+    .sjm-description,
+    .sjm-subtitle {
+        color: #333;
+    }
+}
+
+/* ============================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.sjm-card:focus,
+.sjm-button:focus,
+.sjm-filter-input:focus,
+.sjm-filter-select:focus {
+    outline: 2px solid var(--sjm-primary);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .sjm-card {
+        border-width: 2px;
+    }
+
+    .sjm-badge {
+        border-width: 2px;
+    }
+
+    .sjm-button {
+        border-width: 2px;
+    }
+}
