@@ -1,69 +1,89 @@
 <?php
 /**
- * Uninstall Wisdom Journal Manager
- * 
- * This file is executed when the plugin is uninstalled.
- * It cleans up all plugin data from the database.
- * 
- * @package Wisdom Journal Manager
- * @version 1.0
+ * Uninstall: remove plugin options and custom tables.
+ * Journal / Issue / Paper CPT content is preserved in wp_posts.
+ *
+ * @package WisdomJournalManager
  */
 
-// If uninstall not called from WordPress, exit
-if (!defined('WP_UNINSTALL_PLUGIN')) {
-    exit;
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	exit;
 }
 
-// Security check - only allow administrators to uninstall
-if (!current_user_can('activate_plugins')) {
-    return;
-}
-
-// Get plugin options
-$options = array(
-    'sjm_flush_rewrite_rules',
-    'sjm_email_settings',
-    'sjm_analytics_settings',
-    'sjm_security_settings'
-);
-
-// Delete plugin options
-foreach ($options as $option) {
-    delete_option($option);
-}
-
-// Delete transients
-delete_transient('sjm_paper_open_access_notice');
-
-// Clean up any remaining transients (paper and issue validation notices) - Fixed SQL injection
 global $wpdb;
-$wpdb->query($wpdb->prepare(
-    "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
-    '_transient_sjm_paper_required_notice_%'
-));
-$wpdb->query($wpdb->prepare(
-    "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
-    '_transient_sjm_issue_required_notice_%'
-));
 
-// Remove custom roles if they exist
-$journal_roles = array(
-    'journal_editor_in_chief',
-    'journal_managing_editor', 
-    'journal_guest_editor',
-    'journal_reviewer',
-    'journal_author'
+$options = array(
+	'wjm_version',
+	'wjm_db_version',
+	'wjm_citation_schedule',
+	'wjm_catalog_page_id',
+	'wjm_submit_page_id',
+	'wjm_indexes_dirty',
+	'wjm_doi_prefix',
+	'wjm_doi_settings',
+	'wjm_api_crossref',
+	'wjm_api_semantic_scholar',
+	'wjm_api_scopus',
+	'wjm_api_wos',
+	'wjm_crossref_user',
+	'wjm_crossref_pass',
+	'wjm_datacite_user',
+	'wjm_datacite_pass',
+	'wjm_doi_last_connection_test',
+	'wjm_payment_settings',
+	'wjm_stripe_secret',
+	'wjm_stripe_publishable',
+	'wjm_stripe_webhook_secret',
+	'wjm_stripe_last_connection_test',
+	'wjm_relational_db_version',
+	'wjm_relational_migrated',
+	'wjm_relational_migrated_at',
+	'wjm_access_settings',
+	'wjm_demo_imported_at',
+	'wjm_advanced_mode',
+	'wjm_decision_templates',
+	'wjm_first_cycle_proven_at',
+	'wjm_webhook_url',
+	'wjm_webhook_events',
+	'wjm_waiver_codes',
+	'wjm_orcid_settings',
+	'wjm_orcid_secret',
+	'wjm_oai_rewrite_flushed',
+	'wjm_rp_deals',
+	'wjm_ithenticate_settings',
+	'wjm_ithenticate_api_key',
 );
 
-foreach ($journal_roles as $role) {
-    if (get_role($role)) {
-        remove_role($role);
-    }
+foreach ( $options as $option ) {
+	delete_option( $option );
 }
 
-// Note: We don't delete the custom post types or their data
-// as this could cause data loss. Users should manually delete
-// if they want to remove all journal data.
+$tables = array(
+	$wpdb->prefix . 'sjm_authors',
+	$wpdb->prefix . 'sjm_paper_authors',
+	$wpdb->prefix . 'sjm_citations',
+	$wpdb->prefix . 'sjm_audit_log',
+	$wpdb->prefix . 'sjm_rate_limits',
+	$wpdb->prefix . 'sjm_collaboration_notes',
+	$wpdb->prefix . 'sjm_workflow_log',
+	$wpdb->prefix . 'sjm_review_assignments',
+	$wpdb->prefix . 'sjm_reviews',
+	$wpdb->prefix . 'sjm_manuscripts',
+	$wpdb->prefix . 'sjm_email_log',
+	$wpdb->prefix . 'sjm_galleys',
+	$wpdb->prefix . 'sjm_copyedit_tasks',
+	$wpdb->prefix . 'sjm_journals',
+	$wpdb->prefix . 'sjm_issues',
+	$wpdb->prefix . 'sjm_papers',
+	$wpdb->prefix . 'sjm_subscriptions',
+);
 
-// Flush rewrite rules
-flush_rewrite_rules(); 
+foreach ( $tables as $table ) {
+	// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$wpdb->query( "DROP TABLE IF EXISTS {$table}" );
+}
+
+$roles = array( 'sjm_student', 'sjm_researcher', 'sjm_editor', 'sjm_reviewer' );
+foreach ( $roles as $role ) {
+	remove_role( $role );
+}

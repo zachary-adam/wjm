@@ -1,134 +1,177 @@
 # Wisdom Journal Manager
 
-**A full-stack WordPress solution for managing academic journals, issues, papers, and authors with automated citation tracking and enterprise-grade security.**
+**v1.0.0 — final**
 
-[![WordPress](https://img.shields.io/badge/WordPress-5.0+-21759b.svg?style=flat-square)](https://wordpress.org)
-[![PHP](https://img.shields.io/badge/PHP-7.4+-777bb4.svg?style=flat-square)](https://php.net)
-[![License](https://img.shields.io/badge/License-GPL--v2-green.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-2.0.html)
-[![Stable](https://img.shields.io/badge/Stable-1.0.0-blue.svg?style=flat-square)](#)
+Scholarly publishing for WordPress. Authors submit → editors work the Inbox → review → publish. Money, DOI, and Stripe stay optional until you add your own vendor accounts. DOAJ listing is applied outside the plugin. ORCID Public API is for lookup / connect — not Member write.
 
-Developed by **Aethex**, Wisdom Journal Manager provides a comprehensive infrastructure for academic publishing. The platform manages the complete publication hierarchy—Journals, Issues, Papers, and Authors—integrating professional editorial workflows with robust automation and security.
+<p align="center">
+  <img src="assets/promo/banner-hero.png" alt="WJM — Wisdom Journal Manager" width="920" />
+</p>
 
----
+<p align="center">
+  <img src="assets/brand/lockup-horizontal.png" alt="WJM Kindled Book lockup" width="420" />
+</p>
 
-## Publication Hierarchy
-
-The system architecture is built on a structured relational model to ensure data integrity and academic compliance:
-
-* **Journals:** Top-level containers supporting ISSN, publisher details, editorial board management, and unique branding.
-* **Issues:** Publication units linked to specific journals, supporting volume/numbering, special issues, and guest editors.
-* **Papers:** Scholarly items featuring DOI integration, versioning history, open access flags, and compliance metadata.
-* **Authors:** Dedicated records stored in the custom `wp_sjm_authors` table, featuring ORCID integration and cross-linked attribution.
+**Brand:** Kindled Book mark · **Wordmark:** Source Serif · **UI:** Inter · Bookish, editorial — a journal should feel like print, not a terminal.
 
 ---
 
-## Functional Modules
+## What it is
 
-### Administrative Management
-* **Editorial Workflow:** Assign roles including Editor-in-Chief, Managing Editor, Reviewers, and Layout Editors per journal or issue.
-* **Lifecycle Tracking:** Monitor paper status with comprehensive timestamps, editorial notes, and tracking history.
-* **Compliance & Rights:** Dedicated fields for funding statements, conflicts of interest, ethics committee approval, and data availability.
-* **Versioning System:** Sophisticated version control allowing for multiple revisions, types (Preprint/Final), and public history displays.
+<p align="center">
+  <img src="assets/promo/promo-what-is-wjm.jpg" alt="What WJM is — Submit, Inbox, Publish" width="920" />
+</p>
 
-### Automation & API Integrations
-The plugin features a robust engine to maintain real-time citation metrics and scholarly data:
-* **Standard Integrations:** CrossRef (DOI), Semantic Scholar, and arXiv.
-* **Enterprise Integrations:** Scopus and Web of Science (requires valid API credentials).
-* **Security:** All external API keys are stored at rest using **AES-256-CBC encryption** derived from WordPress security salts.
-
-### Security & Data Integrity
-* **Role-Based Access Control:** Granular capability checks enforced across all administrative actions.
-* **Rate Limiting:** Sophisticated quotas to prevent API abuse and ensure server stability.
-* **Audit Logging:** A centralized security log records severity levels, IP addresses, and user contexts for all critical events.
-* **SQL Safety:** Full implementation of parameterized queries and CSRF protection via WordPress nonces.
+<p align="center">
+  <img src="assets/promo/promo-loop.jpg" alt="The journal loop" width="920" />
+</p>
 
 ---
 
-## Shortcode Reference
+## Why it’s easy
 
-Standardized shortcodes allow for the deployment of academic content across any WordPress page or post.
+| Day one | Later (optional) |
+| --- | --- |
+| Import demo → open Inbox → decide → publish | Stripe APC, Crossref/DataCite DOI, iThenticate |
+| Public submit page (authors never need wp-admin) | ORCID Public API (lookup / connect) |
+| Journals sidebar stays calm | DOAJ application on doaj.org |
+| 3-minute Help inside Journals → Help | Double-blind Oxford-style file uploads |
 
-| Shortcode | Parameters | Description |
-| :--- | :--- | :--- |
-| `[journals]` | `layout`, `publisher`, `year` | Renders a grid or list view of available journals. |
-| `[issues]` | `journal_id`, `volume`, `special_issue` | Displays issues filtered by journal or specific criteria. |
-| `[papers]` | `author`, `keyword`, `paper_type` | Lists papers with advanced metadata filtering options. |
-| `[wjm_author_profile]`| `id` | Embeds a specific author profile card with publication history. |
+**Remember the loop:** Authors submit → **Inbox** → review → publish.
 
----
-
-## User Roles & System Quotas
-
-To maintain operational performance, the system enforces hourly rate limits for API and data operations.
-
-| User Role | API Calls / hr | Data Fetches / hr | System Permissions |
-| :--- | :--- | :--- | :--- |
-| **Student** | 50 | 30 | Read-only access. |
-| **Researcher** | 100 | 60 | Read access and management of personal papers. |
-| **Editor** | 200 | 120 | Full management of journals, issues, and papers. |
-| **Administrator**| 500 | 300 | Unrestricted system configuration and security logs. |
+<p align="center">
+  <img src="assets/promo/promo-capabilities.jpg" alt="Built for the press — capabilities" width="920" />
+</p>
 
 ---
 
-## Technical Documentation
+## Screenshots
 
-<details>
-<summary>System Requirements & Deployment</summary>
+Live product UI from v1.0.0 — each screen once.
 
-* **Requirements:** WordPress 5.0+, PHP 7.4+, MySQL 5.6+ (or MariaDB equivalent).
-* **Required Extensions:** `curl`, `json`.
-* **Installation:**
-    1. Upload the plugin package to the `/wp-content/plugins/` directory.
-    2. Activate the plugin via the WordPress Admin dashboard.
-    3. Navigate to **Journals → Plugin Verification** to run the diagnostic suite.
-    4. Configure API keys and automation frequency under **Journals → Automation**.
-</details>
+### 1 · Home — learn the journal loop
 
-<details>
-<summary>Data Model & Development Hooks</summary>
+<p align="center">
+  <img src="assets/screenshots/01-home.jpg" alt="Journals → Home" width="920" />
+</p>
 
-**Database Architecture:**
-The plugin utilizes the standard WordPress post table for hierarchical content and a custom `wp_sjm_authors` table for high-performance author querying.
+### 2 · Inbox — your daily page
 
-**Action Hooks:**
-* `sjm_after_save_journal`: Fires following journal metadata updates.
-* `sjm_after_save_paper`: Fires following paper publication or revision.
-* `sjm_security_event_logged`: Triggered when an event is added to the security audit trail.
+<p align="center">
+  <img src="assets/screenshots/02-inbox.jpg" alt="Journals → Inbox board" width="920" />
+</p>
 
-**Filter Hooks:**
-* `sjm_paper_query_args`: Modify the query parameters for paper listing shortcodes.
-* `sjm_journal_query_args`: Customize the retrieval of journal objects.
-</details>
+### 3 · Help — three minutes
 
----
+<p align="center">
+  <img src="assets/screenshots/03-help.jpg" alt="Journals → Help" width="920" />
+</p>
 
-## Frequently Asked Questions
+### 4 · Advanced — toolbox when you need it
 
-**How is citation data kept current?**
-Metrics are updated through a background process (cron) on a daily, weekly, or monthly schedule as configured in the Automation settings. Manual updates are available on a per-paper basis.
+<p align="center">
+  <img src="assets/screenshots/04-advanced.jpg" alt="Journals → Advanced" width="920" />
+</p>
 
-**How does the system handle Open Access?**
-The system supports both Open Access and Peer-Reviewed flags at the journal and paper levels. These flags automate the display of standard academic badges and metadata on the frontend.
+### 5 · Author submit page
 
-**What happens to data upon plugin deactivation?**
-Deactivation preserves all content and settings. Uninstallation via the WordPress dashboard will remove plugin-specific settings and scheduled tasks, but all Journal, Issue, and Paper post types remain in the database for data retention.
+<p align="center">
+  <img src="assets/screenshots/05-submit.jpg" alt="Submit Manuscript public page" width="920" />
+</p>
 
 ---
 
-## Troubleshooting
+## Brand & WordPress.org assets
 
-* **Interface Visibility:** Ensure the user has the appropriate role assigned under **Journals → User Roles**.
-* **Metric Sync Failures:** Verify that outbound server requests are permitted and that API rate limits have not been exceeded.
-* **Template Styling:** The plugin enqueues specific CSS for academic templates. If theme conflicts occur, use the `.sjm-single-container` class for CSS specificity overrides.
+| Asset | Location |
+| --- | --- |
+| In-plugin logos (SVG + PNG) | `assets/brand/` |
+| Promo / README graphics | `assets/promo/` |
+| WordPress.org directory banners, icons, screenshots | Repo root [`.wordpress-org/`](../.wordpress-org/) |
+
+WordPress.org upload checklist lives in [`.wordpress-org/README.txt`](../.wordpress-org/README.txt).
+
+Colors: Midnight `#001F3F` · Book Green `#00804C` · Book Dark `#00603A` · Spring `#DBE64C` · Paper `#F6F7ED`
+
+---
+
+## Install
+
+1. Upload `wisdom-journal-manager.zip` via **Plugins → Add New → Upload Plugin**
+2. Activate **Wisdom Journal Manager**
+3. You’ll land on **Journals → Home**
+4. Click **Import demo (recommended)** — or create a blank journal
+5. Open **Inbox**, try a sample paper, then share the author submit page
+
+Requires **WordPress 5.0+**, **PHP 7.4+**.
 
 ---
 
-## Credits & Licensing
+## What’s included
 
-* **Principal Developer:** Zachary Adam
-* **Organization:** [Aethex Web Solutions](http://aethexweb.com)
-* **Compliance:** Follows WordPress coding standards and security best practices.
-* **License:** Distributed under the GNU General Public License v2 or later.
+### Core (works without vendor keys)
+
+- Journals → Issues → Papers
+- Public manuscript submission (+ drafts, co-authors, CRediT)
+- Editor Inbox (board / list)
+- Peer review invites, structured forms, reminders
+- Decision letters, desk reject, editor-side appeals
+- Double-blind file policy (Oxford-style anonymized + title page)
+- Soft integrity heuristics (never auto-rejects)
+- Shortcodes, REST API, minimal JATS export
+- DOAJ **readiness checklist** (you still apply on doaj.org)
+- ORCID Public API (lookup / connect / import works) — does **not** write peer-review credit
+
+### Optional (paste your credentials to Enable)
+
+| Feature | You provide |
+| --- | --- |
+| **Stripe** APC | Secret + publishable (+ webhook) — or Manual pay |
+| **DOI** deposit | Prefix + Crossref / DataCite — or Local string-only |
+| **iThenticate** | Tenant API base + key — or manual % |
+| **ORCID** | Free Public API Client ID + Secret |
+| **DOAJ listing** | Apply at [doaj.org/apply](https://doaj.org/apply/) |
+
+### Honest limits
+
+- No ORCID Member peer-review write API
+- No Web of Science citation counts (use Crossref / Semantic Scholar / Scopus)
+- Webhooks fire once (no retries); OAI is minimal `oai_dc`
+- “Show paper extras” only adds meta boxes — Advanced menu is a separate toolbox
 
 ---
-*Wisdom Journal Manager — Engineered for Academic Excellence.*
+
+## Shortcodes
+
+| Shortcode | Purpose |
+| --- | --- |
+| `[wjm_submit]` | Author submission form |
+| `[wjm_my_submissions]` | Author’s papers |
+| `[journals]` `[issues]` `[papers]` | Catalog lists |
+| `[wjm_search]` | Search |
+| `[wjm_paper_metrics]` | Paper metrics |
+| `[wjm_author_profile]` | Author profile |
+
+---
+
+## REST API (selected)
+
+Base: `/wp-json/wjm/v1/`
+
+- `GET /journals` · `GET /papers` · `GET /papers/{id}`
+- `POST /papers/{id}/status` · `GET /stats`
+
+---
+
+## Support & license
+
+- **Author:** Zachary Adam — [aethexweb.com](https://aethexweb.com)  
+- **WordPress.org contributor:** [aethex](https://profiles.wordpress.org/aethex/)  
+- **Plugin URI:** [github.com/aethex/wisdom-journal-manager](https://github.com/aethex/wisdom-journal-manager)  
+- **License:** GPL-2.0-or-later  
+
+---
+
+## Changelog (1.0.0)
+
+Final ship: calm Home / Help learn path, Kindled Book brand (Source Serif + Inter), Inbox, peer review, submissions, credential-gated Stripe / DOI / iThenticate, ORCID Public API, DOAJ checklist, shortcodes, REST, minimal JATS. Honest limits documented (no ORCID Member write, no WoS citation counts). WordPress.org banners, icons, and screenshots in `.wordpress-org/`.

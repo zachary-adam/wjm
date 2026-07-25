@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 220" width="260" height="220">
+  <title>WJM — stacked lockup</title>
+  <g transform="translate(130,86) scale(0.62)">
+    <path d="M0,60 C -22,44 -52,38 -78,44 C -84,45 -88,42 -88,36 L -88,-20 C -88,-26 -84,-30 -78,-31 C -50,-36 -20,-30 0,-14 Z" fill="#00804C"/>
+    <path d="M0,60 C 22,44 52,38 78,44 C 84,45 88,42 88,36 L 88,-20 C 88,-26 84,-30 78,-31 C 50,-36 20,-30 0,-14 Z" fill="#00603A"/>
+    <path d="M0,44 C -18,32 -44,27 -66,31 L -66,-14 C -44,-19 -18,-14 0,-2 Z" fill="#F6F7ED" opacity="0.16"/>
+    <path d="M0,-96 C 13,-78 20,-64 20,-52 A20,20 0 0 1 0,-32 A20,20 0 0 1 -20,-52 C -20,-64 -13,-78 0,-96 Z" fill="#00804C"/>
+    <circle cx="0" cy="-52" r="6" fill="#DBE64C"/>
+  </g>
+  <text x="130" y="166" text-anchor="middle" font-family="'Source Serif 4','Source Serif Pro',Georgia,serif" font-size="34" font-weight="600" fill="#001F3F">WJM</text>
+  <text x="130" y="190" text-anchor="middle" font-family="'Inter','IBM Plex Sans',system-ui,sans-serif" font-size="12" letter-spacing="1.5" fill="#5A6B7A">WISDOM JOURNAL MANAGER</text>
+</svg>
