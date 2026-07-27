@@ -1,177 +1,161 @@
-# Wisdom Journal Manager
+# Wisdom Journal Manager (WJM)
 
-**v1.0.0 — final**
+**Free open-source WordPress journal software** for small scholarly boards.
 
-Scholarly publishing for WordPress. Authors submit → editors work the Inbox → review → publish. Money, DOI, and Stripe stay optional until you add your own vendor accounts. DOAJ listing is applied outside the plugin. ORCID Public API is for lookup / connect — not Member write.
+**Authors submit → editors work the Inbox → review → publish.**
 
-<p align="center">
-  <img src="assets/promo/banner-hero.png" alt="WJM — Wisdom Journal Manager" width="920" />
-</p>
+No ScholarOne. No WordPress login for authors. Stripe, DOI, and ORCID stay optional.
 
 <p align="center">
-  <img src="assets/brand/lockup-horizontal.png" alt="WJM Kindled Book lockup" width="420" />
+  <img src="assets/screenshots/01-home.jpg" alt="WJM Home: free WordPress journal software showing next steps" width="920" />
 </p>
 
-**Brand:** Kindled Book mark · **Wordmark:** Source Serif · **UI:** Inter · Bookish, editorial — a journal should feel like print, not a terminal.
+**Product site:** [shamaresearch.com/wjm](https://shamaresearch.com/wjm/) · **Screenshots:** [Tour](https://shamaresearch.com/wjm/tour.html) · **Guide:** [Install](https://shamaresearch.com/wjm/help.html) · **Author:** Zachary Adam / Shama Research
+
+**Research paper:** [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6387618) · [ResearchGate](https://www.researchgate.net/publication/401792979_WJM_A_Modular_WordPress_Architecture_for_Scalable_Academic_Publishing_Infrastructure)
 
 ---
 
-## What it is
+## Example
 
-<p align="center">
-  <img src="assets/promo/promo-what-is-wjm.jpg" alt="What WJM is — Submit, Inbox, Publish" width="920" />
-</p>
+A campus nursing journal already runs on WordPress. Three faculty edit. Students used to email PDFs.
 
-<p align="center">
-  <img src="assets/promo/promo-loop.jpg" alt="The journal loop" width="920" />
-</p>
+With WJM: student opens the public submit page → editor claims the paper in **Inbox** → reviewer gets an invite link → accept → publish. Readers see the paper on the journal site. No Stripe on day one.
+
+Also fits: society newsletters with peer review, department working-paper series, student research magazines.
 
 ---
 
-## Why it’s easy
+## The loop
 
-| Day one | Later (optional) |
+| Step | What happens |
 | --- | --- |
-| Import demo → open Inbox → decide → publish | Stripe APC, Crossref/DataCite DOI, iThenticate |
-| Public submit page (authors never need wp-admin) | ORCID Public API (lookup / connect) |
-| Journals sidebar stays calm | DOAJ application on doaj.org |
-| 3-minute Help inside Journals → Help | Double-blind Oxford-style file uploads |
+| **Submit** | Authors use a public form. No wp-admin account. |
+| **Inbox** | Editors claim papers, send to review, decide. |
+| **Publish** | Issues and papers go live on the front end. |
 
-**Remember the loop:** Authors submit → **Inbox** → review → publish.
-
-<p align="center">
-  <img src="assets/promo/promo-capabilities.jpg" alt="Built for the press — capabilities" width="920" />
-</p>
+Open **Advanced** only when you need Stripe, DOI, ORCID, or integrations.
 
 ---
 
 ## Screenshots
 
-Live product UI from v1.0.0 — each screen once.
-
-### 1 · Home — learn the journal loop
+### Home
 
 <p align="center">
-  <img src="assets/screenshots/01-home.jpg" alt="Journals → Home" width="920" />
+  <img src="assets/screenshots/01-home.jpg" alt="WJM Journals Home: next steps for your WordPress journal" width="920" />
 </p>
 
-### 2 · Inbox — your daily page
+### Journals list
 
 <p align="center">
-  <img src="assets/screenshots/02-inbox.jpg" alt="Journals → Inbox board" width="920" />
+  <img src="assets/screenshots/08-journals-list.jpg" alt="WJM journals list in WordPress admin" width="920" />
 </p>
 
-### 3 · Help — three minutes
+### Journal settings
 
 <p align="center">
-  <img src="assets/screenshots/03-help.jpg" alt="Journals → Help" width="920" />
+  <img src="assets/screenshots/10-journal-edit.jpg" alt="Edit journal settings ISSN and editorial board in WJM" width="920" />
 </p>
 
-### 4 · Advanced — toolbox when you need it
+### Inbox
 
 <p align="center">
-  <img src="assets/screenshots/04-advanced.jpg" alt="Journals → Advanced" width="920" />
+  <img src="assets/screenshots/02-inbox.jpg" alt="WJM Inbox board: claim review and decide on papers" width="920" />
 </p>
 
-### 5 · Author submit page
+### Authors
 
 <p align="center">
-  <img src="assets/screenshots/05-submit.jpg" alt="Submit Manuscript public page" width="920" />
+  <img src="assets/screenshots/09-authors.jpg" alt="WJM authors list with ORCID fields" width="920" />
 </p>
 
----
+### Public journal
 
-## Brand & WordPress.org assets
+<p align="center">
+  <img src="assets/screenshots/06-journal.jpg" alt="Public journal page with author submit button" width="920" />
+</p>
 
-| Asset | Location |
-| --- | --- |
-| In-plugin logos (SVG + PNG) | `assets/brand/` |
-| Promo / README graphics | `assets/promo/` |
-| WordPress.org directory banners, icons, screenshots | Repo root [`.wordpress-org/`](../.wordpress-org/) |
+### Paper page
 
-WordPress.org upload checklist lives in [`.wordpress-org/README.txt`](../.wordpress-org/README.txt).
+<p align="center">
+  <img src="assets/screenshots/07-paper.jpg" alt="Published research paper page on WordPress" width="920" />
+</p>
 
-Colors: Midnight `#001F3F` · Book Green `#00804C` · Book Dark `#00603A` · Spring `#DBE64C` · Paper `#F6F7ED`
+### Help
+
+<p align="center">
+  <img src="assets/screenshots/03-help.jpg" alt="Built-in WJM Help teaching the journal loop" width="920" />
+</p>
+
+### Advanced
+
+<p align="center">
+  <img src="assets/screenshots/04-advanced.jpg" alt="WJM Advanced: optional Stripe and DOI tools" width="920" />
+</p>
+
+### Advanced · more
+
+<p align="center">
+  <img src="assets/screenshots/11-advanced-more.jpg" alt="WJM Advanced health and feature list" width="920" />
+</p>
 
 ---
 
 ## Install
 
-1. Upload `wisdom-journal-manager.zip` via **Plugins → Add New → Upload Plugin**
+1. Upload the plugin zip via **Plugins → Add New → Upload Plugin**
 2. Activate **Wisdom Journal Manager**
-3. You’ll land on **Journals → Home**
-4. Click **Import demo (recommended)** — or create a blank journal
-5. Open **Inbox**, try a sample paper, then share the author submit page
+3. Open **Journals → Home**
+4. Click **Import demo** (recommended)
+5. Open **Inbox**, then share the author submit page
 
 Requires **WordPress 5.0+**, **PHP 7.4+**.
 
+Full guide: [shamaresearch.com/wjm/help.html](https://shamaresearch.com/wjm/help.html)
+
 ---
 
-## What’s included
+## FAQ
 
-### Core (works without vendor keys)
+**Do authors need a WordPress account?** No: public submit page.
+
+**Is WJM free?** Yes: GPL-2.0-or-later. No WJM license fee.
+
+**Do I need Stripe or DOI to start?** No.
+
+**Is this ScholarOne or OJS?** No. Built for small WordPress boards, not enterprise parity.
+
+---
+
+## What ships without vendor keys
 
 - Journals → Issues → Papers
-- Public manuscript submission (+ drafts, co-authors, CRediT)
+- Public manuscript submission
 - Editor Inbox (board / list)
-- Peer review invites, structured forms, reminders
-- Decision letters, desk reject, editor-side appeals
-- Double-blind file policy (Oxford-style anonymized + title page)
-- Soft integrity heuristics (never auto-rejects)
-- Shortcodes, REST API, minimal JATS export
-- DOAJ **readiness checklist** (you still apply on doaj.org)
-- ORCID Public API (lookup / connect / import works) — does **not** write peer-review credit
+- Peer review invites and forms
+- Decision letters
+- Double-blind file policy
+- Help inside the plugin
 
-### Optional (paste your credentials to Enable)
+## Optional (your own keys)
 
-| Feature | You provide |
-| --- | --- |
-| **Stripe** APC | Secret + publishable (+ webhook) — or Manual pay |
-| **DOI** deposit | Prefix + Crossref / DataCite — or Local string-only |
-| **iThenticate** | Tenant API base + key — or manual % |
-| **ORCID** | Free Public API Client ID + Secret |
-| **DOAJ listing** | Apply at [doaj.org/apply](https://doaj.org/apply/) |
+- Stripe APC
+- Crossref / DataCite DOI
+- ORCID Public API (lookup / connect: not Member write)
+- iThenticate similarity %
+- DOAJ readiness checklist (you still apply on doaj.org)
 
-### Honest limits
-
-- No ORCID Member peer-review write API
-- No Web of Science citation counts (use Crossref / Semantic Scholar / Scopus)
-- Webhooks fire once (no retries); OAI is minimal `oai_dc`
-- “Show paper extras” only adds meta boxes — Advanced menu is a separate toolbox
+Honest limits: [shamaresearch.com/wjm/limits.html](https://shamaresearch.com/wjm/limits.html)
 
 ---
 
-## Shortcodes
+## Brand
 
-| Shortcode | Purpose |
-| --- | --- |
-| `[wjm_submit]` | Author submission form |
-| `[wjm_my_submissions]` | Author’s papers |
-| `[journals]` `[issues]` `[papers]` | Catalog lists |
-| `[wjm_search]` | Search |
-| `[wjm_paper_metrics]` | Paper metrics |
-| `[wjm_author_profile]` | Author profile |
+Kindled Book · Midnight `#001F3F` · Book Green `#00804C` · Spring `#DBE64C` · Paper `#F6F7ED`
 
 ---
 
-## REST API (selected)
+## License
 
-Base: `/wp-json/wjm/v1/`
-
-- `GET /journals` · `GET /papers` · `GET /papers/{id}`
-- `POST /papers/{id}/status` · `GET /stats`
-
----
-
-## Support & license
-
-- **Author:** Zachary Adam — [aethexweb.com](https://aethexweb.com)  
-- **WordPress.org contributor:** [aethex](https://profiles.wordpress.org/aethex/)  
-- **Plugin URI:** [github.com/aethex/wisdom-journal-manager](https://github.com/aethex/wisdom-journal-manager)  
-- **License:** GPL-2.0-or-later  
-
----
-
-## Changelog (1.0.0)
-
-Final ship: calm Home / Help learn path, Kindled Book brand (Source Serif + Inter), Inbox, peer review, submissions, credential-gated Stripe / DOI / iThenticate, ORCID Public API, DOAJ checklist, shortcodes, REST, minimal JATS. Honest limits documented (no ORCID Member write, no WoS citation counts). WordPress.org banners, icons, and screenshots in `.wordpress-org/`.
+GPL-2.0-or-later

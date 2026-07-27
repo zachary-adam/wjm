@@ -30,7 +30,6 @@ class WJM_Workflow {
 			'copyediting'      => __( 'Copyediting', 'wisdom-journal-manager' ),
 			'production'       => __( 'Production', 'wisdom-journal-manager' ),
 			'published'        => __( 'Published', 'wisdom-journal-manager' ),
-			'desk_reject'      => __( 'Desk Rejected', 'wisdom-journal-manager' ),
 			'rejected'         => __( 'Rejected', 'wisdom-journal-manager' ),
 			'withdrawn'        => __( 'Withdrawn', 'wisdom-journal-manager' ),
 		);
@@ -44,53 +43,18 @@ class WJM_Workflow {
 	public static function transitions() {
 		return array(
 			'draft'        => array( 'submitted', 'withdrawn' ),
-			'submitted'    => array( 'screening', 'under_review', 'desk_reject', 'withdrawn' ),
-			'screening'    => array( 'under_review', 'desk_reject', 'withdrawn' ),
+			'submitted'    => array( 'screening', 'withdrawn' ),
+			'screening'    => array( 'under_review', 'rejected', 'withdrawn' ),
 			'under_review' => array( 'revision', 'accepted', 'rejected', 'under_review' ),
 			'revision'     => array( 'resubmitted', 'withdrawn' ),
 			'resubmitted'  => array( 'under_review', 'accepted', 'rejected' ),
-			'accepted'     => array( 'copyediting', 'production', 'rejected' ),
+			'accepted'     => array( 'copyediting', 'rejected' ),
 			'copyediting'  => array( 'production' ),
 			'production'   => array( 'published' ),
 			'published'    => array(),
-			'desk_reject'  => array( 'screening' ), // appeal upheld can reopen
-			'rejected'     => array( 'under_review' ), // appeal upheld can reopen
+			'rejected'     => array(),
 			'withdrawn'    => array(),
 		);
-	}
-
-	/**
-	 * Simple happy-path buttons: status => [ to => label ].
-	 *
-	 * @param string $status Current status.
-	 * @return array
-	 */
-	public static function simple_actions( $status ) {
-		$map = array(
-			'draft'        => array( 'submitted' => __( 'Submit for review', 'wisdom-journal-manager' ) ),
-			'submitted'    => array(
-				'under_review' => __( 'Send to peer review', 'wisdom-journal-manager' ),
-				'desk_reject'  => __( 'Desk reject', 'wisdom-journal-manager' ),
-			),
-			'screening'    => array(
-				'under_review' => __( 'Send to peer review', 'wisdom-journal-manager' ),
-				'desk_reject'  => __( 'Desk reject', 'wisdom-journal-manager' ),
-			),
-			'under_review' => array(
-				'accepted' => __( 'Accept', 'wisdom-journal-manager' ),
-				'revision' => __( 'Ask for revision', 'wisdom-journal-manager' ),
-				'rejected' => __( 'Reject', 'wisdom-journal-manager' ),
-			),
-			'revision'     => array( 'resubmitted' => __( 'Resubmit revision', 'wisdom-journal-manager' ) ),
-			'resubmitted'  => array(
-				'under_review' => __( 'Send back to review', 'wisdom-journal-manager' ),
-				'accepted'     => __( 'Accept', 'wisdom-journal-manager' ),
-			),
-			'accepted'     => array( 'production' => __( 'Start production', 'wisdom-journal-manager' ) ),
-			'copyediting'  => array( 'production' => __( 'To production', 'wisdom-journal-manager' ) ),
-			'production'   => array( 'published' => __( 'Publish', 'wisdom-journal-manager' ) ),
-		);
-		return isset( $map[ $status ] ) ? $map[ $status ] : array();
 	}
 
 	public static function init() {
@@ -114,17 +78,13 @@ class WJM_Workflow {
 	 * @param int    $paper_id Paper ID.
 	 * @param string $to       Target status.
 	 * @param string $note     Optional note.
-	 * @param string $extra    Optional JSON/extra (revision due date).
 	 * @return true|WP_Error
 	 */
-	public static function transition( $paper_id, $to, $note = '', $extra = array() ) {
+	public static function transition( $paper_id, $to, $note = '' ) {
 		$paper_id = absint( $paper_id );
 		$to       = sanitize_key( $to );
 		$from     = self::get_status( $paper_id );
 		$allowed  = self::transitions();
-		if ( ! is_array( $extra ) ) {
-			$extra = array();
-		}
 
 		if ( ! isset( self::statuses()[ $to ] ) ) {
 			return new WP_Error( 'wjm_bad_status', __( 'Unknown status.', 'wisdom-journal-manager' ) );
@@ -180,14 +140,6 @@ class WJM_Workflow {
 			);
 		}
 
-		// Ahead-of-print: published without an issue → early view.
-		if ( 'published' === $to ) {
-			$issue_id = (int) get_post_meta( $paper_id, '_sjm_issue_id', true );
-			if ( ! $issue_id ) {
-				update_post_meta( $paper_id, '_sjm_early_view', '1' );
-			}
-		}
-
 		/**
 		 * Fires after a workflow status change.
 		 *
@@ -198,26 +150,10 @@ class WJM_Workflow {
 		 */
 		do_action( 'sjm_workflow_transition', $paper_id, $from, $to, $note );
 
-		if ( 'revision' === $to && ! empty( $extra['revision_due'] ) ) {
-			update_post_meta( $paper_id, '_sjm_revision_due', sanitize_text_field( $extra['revision_due'] ) );
-		}
-
-		WJM_Audit::log(
-			'info',
-			'workflow_transition',
-			"Paper {$paper_id}: {$from} → {$to}",
-			array(
-				'paper_id' => $paper_id,
-				'from'     => $from,
-				'to'       => $to,
-			)
-		);
+		WJM_Audit::log( 'info', 'workflow_transition', "Paper {$paper_id}: {$from} → {$to}" );
 
 		if ( class_exists( 'WJM_Email' ) ) {
-			// Decision letters (accept/revision/reject) are sent by WJM_Editorial_Trust.
-			if ( ! in_array( $to, array( 'accepted', 'rejected', 'desk_reject', 'revision' ), true ) ) {
-				WJM_Email::notify_transition( $paper_id, $from, $to, $note );
-			}
+			WJM_Email::notify_transition( $paper_id, $from, $to, $note );
 		}
 
 		return true;
@@ -250,7 +186,7 @@ class WJM_Workflow {
 	public static function meta_box() {
 		add_meta_box(
 			'wjm_workflow',
-			__( 'Next step', 'wisdom-journal-manager' ),
+			__( 'Editorial Workflow', 'wisdom-journal-manager' ),
 			array( __CLASS__, 'render_meta_box' ),
 			'sjm_paper',
 			'side',
@@ -259,59 +195,34 @@ class WJM_Workflow {
 	}
 
 	public static function render_meta_box( $post ) {
-		$status   = self::get_status( $post->ID );
-		$statuses = self::statuses();
-		$next     = isset( self::transitions()[ $status ] ) ? self::transitions()[ $status ] : array();
-		$simple   = self::simple_actions( $status );
-		$history  = self::history( $post->ID );
-		$can      = current_user_can( 'edit_others_sjm_papers' ) || current_user_can( 'manage_options' ) || (int) $post->post_author === get_current_user_id();
-		$round    = class_exists( 'WJM_Editorial_Trust' ) ? WJM_Editorial_Trust::get_round( $post->ID ) : 0;
+		$status    = self::get_status( $post->ID );
+		$statuses  = self::statuses();
+		$next      = isset( self::transitions()[ $status ] ) ? self::transitions()[ $status ] : array();
+		$history   = self::history( $post->ID );
 		?>
-		<p>
+		<p><strong><?php esc_html_e( 'Current status', 'wisdom-journal-manager' ); ?>:</strong><br />
 			<span class="wjm-status-badge wjm-status-<?php echo esc_attr( $status ); ?>"><?php echo esc_html( $statuses[ $status ] ); ?></span>
-			<?php if ( $round ) : ?>
-				<span class="wjm-status-badge"><?php echo esc_html( 'R' . $round ); ?></span>
-			<?php endif; ?>
 		</p>
-		<?php if ( $can && $simple ) : ?>
-			<div class="wjm-flow-btns">
-				<?php foreach ( $simple as $to => $label ) : ?>
-					<?php
-					$is_bad = in_array( $to, array( 'rejected', 'desk_reject', 'withdrawn' ), true );
-					$class  = $is_bad ? 'button' : 'button button-primary';
-					?>
-					<button type="button" class="<?php echo esc_attr( $class ); ?> wjm-quick-transition" data-paper-id="<?php echo esc_attr( $post->ID ); ?>" data-to="<?php echo esc_attr( $to ); ?>">
-						<?php echo esc_html( $label ); ?>
-					</button>
-				<?php endforeach; ?>
-			</div>
+		<?php if ( $next && ( current_user_can( 'edit_others_sjm_papers' ) || current_user_can( 'manage_options' ) || (int) $post->post_author === get_current_user_id() ) ) : ?>
 			<p>
-				<textarea id="wjm_transition_note" class="widefat" rows="4" placeholder="<?php esc_attr_e( 'Decision letter / note to author (required for accept, revision, desk reject, reject)', 'wisdom-journal-manager' ); ?>"></textarea>
+				<label for="wjm_next_status"><strong><?php esc_html_e( 'Move to', 'wisdom-journal-manager' ); ?></strong></label>
+				<select id="wjm_next_status" class="widefat">
+					<?php foreach ( $next as $key ) : ?>
+						<option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $statuses[ $key ] ); ?></option>
+					<?php endforeach; ?>
+				</select>
 			</p>
 			<p>
-				<label for="wjm_revision_due"><?php esc_html_e( 'Revision due (if asking revision)', 'wisdom-journal-manager' ); ?></label>
-				<input type="date" id="wjm_revision_due" class="widefat" />
+				<textarea id="wjm_transition_note" class="widefat" rows="2" placeholder="<?php esc_attr_e( 'Optional note', 'wisdom-journal-manager' ); ?>"></textarea>
 			</p>
-		<?php endif; ?>
-		<?php if ( $can && $next ) : ?>
-			<details style="margin-top:0.75rem;">
-				<summary><?php esc_html_e( 'More statuses', 'wisdom-journal-manager' ); ?></summary>
-				<p>
-					<select id="wjm_next_status" class="widefat">
-						<?php foreach ( $next as $key ) : ?>
-							<option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $statuses[ $key ] ); ?></option>
-						<?php endforeach; ?>
-					</select>
-				</p>
-				<p>
-					<button type="button" class="button wjm-transition-btn" data-paper-id="<?php echo esc_attr( $post->ID ); ?>">
-						<?php esc_html_e( 'Update status', 'wisdom-journal-manager' ); ?>
-					</button>
-				</p>
-			</details>
+			<p>
+				<button type="button" class="button button-primary wjm-transition-btn" data-paper-id="<?php echo esc_attr( $post->ID ); ?>">
+					<?php esc_html_e( 'Update Status', 'wisdom-journal-manager' ); ?>
+				</button>
+			</p>
 		<?php endif; ?>
 		<?php if ( $history ) : ?>
-			<details style="margin-top:0.5rem;">
+			<details>
 				<summary><?php esc_html_e( 'History', 'wisdom-journal-manager' ); ?></summary>
 				<ul class="wjm-workflow-history">
 					<?php foreach ( array_slice( $history, 0, 8 ) as $row ) : ?>
@@ -331,12 +242,8 @@ class WJM_Workflow {
 		$paper_id = isset( $_POST['paper_id'] ) ? absint( $_POST['paper_id'] ) : 0;
 		$to       = isset( $_POST['to'] ) ? sanitize_key( wp_unslash( $_POST['to'] ) ) : '';
 		$note     = isset( $_POST['note'] ) ? sanitize_textarea_field( wp_unslash( $_POST['note'] ) ) : '';
-		$extra    = array();
-		if ( ! empty( $_POST['revision_due'] ) ) {
-			$extra['revision_due'] = sanitize_text_field( wp_unslash( $_POST['revision_due'] ) );
-		}
 
-		$result = self::transition( $paper_id, $to, $note, $extra );
+		$result = self::transition( $paper_id, $to, $note );
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( array( 'message' => $result->get_error_message() ), 400 );
 		}

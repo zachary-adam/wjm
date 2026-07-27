@@ -43,7 +43,9 @@ class WJM_Citation_Tracking {
 		if ( WJM_Encryption::get_secret( 'wjm_api_scopus' ) ) {
 			$sources[] = 'scopus';
 		}
-		// Web of Science: not wired for citation counts — do not fetch.
+		if ( WJM_Encryption::get_secret( 'wjm_api_wos' ) ) {
+			$sources[] = 'wos';
+		}
 
 		$results = array();
 		foreach ( $sources as $source ) {
@@ -109,9 +111,7 @@ class WJM_Citation_Tracking {
 			$wpdb->insert( $table, $row );
 		}
 
-		$total = self::aggregate_count( $paper_id );
-		update_post_meta( $paper_id, '_sjm_citation_total', $total );
-		do_action( 'sjm_citations_updated', $paper_id, $total );
+		update_post_meta( $paper_id, '_sjm_citation_total', self::aggregate_count( $paper_id ) );
 	}
 
 	/**

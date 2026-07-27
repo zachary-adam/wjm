@@ -22,10 +22,6 @@ class WJM_Activator {
 
 		update_option( 'wjm_version', WJM_VERSION );
 
-		if ( class_exists( 'WJM_Migrator' ) ) {
-			WJM_Migrator::run();
-		}
-
 		if ( ! get_option( 'wjm_citation_schedule' ) ) {
 			add_option( 'wjm_citation_schedule', 'weekly' );
 		}

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <title>WJM — Kindled Book, monochrome (recolor via currentColor)</title>
-  <g transform="translate(64,72) scale(0.7)" fill="currentColor" color="#00804C">
-    <path d="M0,60 C -22,44 -52,38 -78,44 C -84,45 -88,42 -88,36 L -88,-20 C -88,-26 -84,-30 -78,-31 C -50,-36 -20,-30 0,-14 Z"/>
-    <path d="M0,60 C 22,44 52,38 78,44 C 84,45 88,42 88,36 L 88,-20 C 88,-26 84,-30 78,-31 C 50,-36 20,-30 0,-14 Z" opacity="0.55"/>
-    <path d="M0,-96 C 13,-78 20,-64 20,-52 A20,20 0 0 1 0,-32 A20,20 0 0 1 -20,-52 C -20,-64 -13,-78 0,-96 Z"/>
-  </g>
-</svg>

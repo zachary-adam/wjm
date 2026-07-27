@@ -72,32 +72,6 @@ class WJM_Audit {
 		);
 	}
 
-	/**
-	 * Paper-scoped audit events (context.paper_id or message contains id).
-	 *
-	 * @param int $paper_id Paper ID.
-	 * @param int $limit    Limit.
-	 * @return object[]
-	 */
-	public static function for_paper( $paper_id, $limit = 40 ) {
-		global $wpdb;
-		$table    = WJM_Database_Schema::table( 'audit' );
-		$paper_id = absint( $paper_id );
-		$like     = '%"paper_id":' . $paper_id . '%';
-		$msg      = '%paper ' . $paper_id . '%';
-		return $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT * FROM {$table}
-				WHERE context LIKE %s OR message LIKE %s OR message LIKE %s
-				ORDER BY created_at DESC LIMIT %d",
-				$like,
-				$msg,
-				'%Paper ' . $paper_id . '%',
-				absint( $limit )
-			)
-		);
-	}
-
 	private static function client_ip() {
 		if ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
 			return sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );

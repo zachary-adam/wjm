@@ -47,7 +47,7 @@ class WJM_Author_Profiles {
 		$link    = WJM_Database_Schema::table( 'paper_authors' );
 		return $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT a.*, pa.author_order, pa.is_corresponding, pa.credit_role
+				"SELECT a.*, pa.author_order, pa.is_corresponding
 				FROM {$authors} a
 				INNER JOIN {$link} pa ON pa.author_id = a.id
 				WHERE pa.paper_id = %d
@@ -91,23 +91,16 @@ class WJM_Author_Profiles {
 	 *
 	 * @param int   $paper_id   Paper ID.
 	 * @param int[] $author_ids Author IDs in order.
-	 * @param array $roles      Optional map author_id => CRediT role string.
 	 */
-	public static function sync_paper_authors( $paper_id, $author_ids, $roles = array() ) {
+	public static function sync_paper_authors( $paper_id, $author_ids ) {
 		global $wpdb;
-		$table    = WJM_Database_Schema::table( 'paper_authors' );
+		$table = WJM_Database_Schema::table( 'paper_authors' );
 		$paper_id = absint( $paper_id );
 
 		$wpdb->delete( $table, array( 'paper_id' => $paper_id ), array( '%d' ) );
 
 		$order = 1;
 		foreach ( array_unique( array_filter( array_map( 'absint', $author_ids ) ) ) as $author_id ) {
-			$role = '';
-			if ( isset( $roles[ $author_id ] ) ) {
-				$role = sanitize_text_field( $roles[ $author_id ] );
-			} elseif ( isset( $roles[ $order - 1 ] ) ) {
-				$role = sanitize_text_field( $roles[ $order - 1 ] );
-			}
 			$wpdb->insert(
 				$table,
 				array(
@@ -115,36 +108,11 @@ class WJM_Author_Profiles {
 					'author_id'        => $author_id,
 					'author_order'     => $order,
 					'is_corresponding' => 1 === $order ? 1 : 0,
-					'credit_role'      => $role ? $role : null,
 				),
-				array( '%d', '%d', '%d', '%d', '%s' )
+				array( '%d', '%d', '%d', '%d' )
 			);
 			$order++;
 		}
-	}
-
-	/**
-	 * CRediT contributor roles (subset).
-	 *
-	 * @return array
-	 */
-	public static function credit_roles() {
-		return array(
-			'conceptualization'           => __( 'Conceptualization', 'wisdom-journal-manager' ),
-			'data_curation'               => __( 'Data curation', 'wisdom-journal-manager' ),
-			'formal_analysis'             => __( 'Formal analysis', 'wisdom-journal-manager' ),
-			'funding_acquisition'         => __( 'Funding acquisition', 'wisdom-journal-manager' ),
-			'investigation'               => __( 'Investigation', 'wisdom-journal-manager' ),
-			'methodology'                 => __( 'Methodology', 'wisdom-journal-manager' ),
-			'project_administration'      => __( 'Project administration', 'wisdom-journal-manager' ),
-			'resources'                   => __( 'Resources', 'wisdom-journal-manager' ),
-			'software'                    => __( 'Software', 'wisdom-journal-manager' ),
-			'supervision'                 => __( 'Supervision', 'wisdom-journal-manager' ),
-			'validation'                  => __( 'Validation', 'wisdom-journal-manager' ),
-			'visualization'               => __( 'Visualization', 'wisdom-journal-manager' ),
-			'writing_original'            => __( 'Writing – original draft', 'wisdom-journal-manager' ),
-			'writing_review'              => __( 'Writing – review & editing', 'wisdom-journal-manager' ),
-		);
 	}
 
 	public static function handle_save() {

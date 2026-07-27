@@ -33,7 +33,7 @@ class WJM_Templates {
 	}
 
 	/**
-	 * Enrich content only when theme does not use plugin templates.
+	 * Enrich paper/journal content when theme has no override.
 	 *
 	 * @param string $content Content.
 	 * @return string
@@ -43,15 +43,8 @@ class WJM_Templates {
 			return $content;
 		}
 
-		// Plugin single templates already render full chrome.
-		$tpl = get_query_template( 'single' );
-		if ( $tpl && false !== strpos( $tpl, 'wisdom-journal-manager' ) ) {
-			return $content;
-		}
-
 		if ( is_singular( 'sjm_paper' ) ) {
-			$galleys = class_exists( 'WJM_Production' ) ? WJM_Production::render_public_galleys( get_the_ID() ) : '';
-			return self::paper_chrome( get_the_ID() ) . $galleys . $content;
+			return self::paper_chrome( get_the_ID() ) . $content;
 		}
 
 		if ( is_singular( 'sjm_journal' ) ) {

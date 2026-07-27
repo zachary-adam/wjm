@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <title>WJM — favicon, navy tile</title>
-  <rect x="0" y="0" width="128" height="128" rx="28" fill="#001F3F"/>
-  <g transform="translate(64,76) scale(0.52)">
-    <path d="M0,60 C -22,44 -52,38 -78,44 C -84,45 -88,42 -88,36 L -88,-20 C -88,-26 -84,-30 -78,-31 C -50,-36 -20,-30 0,-14 Z" fill="#F6F7ED"/>
-    <path d="M0,60 C 22,44 52,38 78,44 C 84,45 88,42 88,36 L 88,-20 C 88,-26 84,-30 78,-31 C 50,-36 20,-30 0,-14 Z" fill="#F6F7ED" opacity="0.72"/>
-    <path d="M0,-96 C 13,-78 20,-64 20,-52 A20,20 0 0 1 0,-32 A20,20 0 0 1 -20,-52 C -20,-64 -13,-78 0,-96 Z" fill="#DBE64C"/>
-  </g>
-</svg>

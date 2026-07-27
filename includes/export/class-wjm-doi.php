@@ -412,31 +412,11 @@ class WJM_DOI {
 	public static function deposit( $doi, $paper_id ) {
 		$settings = self::settings();
 		$agency   = $settings['agency'];
-		$status   = self::credential_status();
 
 		if ( 'local' === $agency ) {
 			update_post_meta( $paper_id, self::META_STATUS, 'local_only' );
 			delete_post_meta( $paper_id, self::META_ERROR );
 			return true;
-		}
-
-		if ( 'datacite' === $agency && empty( $status['datacite'] ) ) {
-			$err = new WP_Error( 'wjm_doi_no_creds', __( 'DataCite deposit needs username + password saved first.', 'wisdom-journal-manager' ) );
-			update_post_meta( $paper_id, self::META_STATUS, 'failed' );
-			update_post_meta( $paper_id, self::META_ERROR, $err->get_error_message() );
-			return $err;
-		}
-		if ( 'crossref' === $agency && empty( $status['crossref'] ) ) {
-			$err = new WP_Error( 'wjm_doi_no_creds', __( 'CrossRef deposit needs username + password saved first.', 'wisdom-journal-manager' ) );
-			update_post_meta( $paper_id, self::META_STATUS, 'failed' );
-			update_post_meta( $paper_id, self::META_ERROR, $err->get_error_message() );
-			return $err;
-		}
-		if ( empty( $status['prefix'] ) ) {
-			$err = new WP_Error( 'wjm_doi_no_prefix', __( 'Set a DOI prefix (10.xxxx) before depositing.', 'wisdom-journal-manager' ) );
-			update_post_meta( $paper_id, self::META_STATUS, 'failed' );
-			update_post_meta( $paper_id, self::META_ERROR, $err->get_error_message() );
-			return $err;
 		}
 
 		if ( 'datacite' === $agency ) {
@@ -778,8 +758,6 @@ class WJM_DOI {
 					·
 					<a href="https://datacite.org/" target="_blank" rel="noopener noreferrer">DataCite</a>
 				</p>
-				<p><strong><?php esc_html_e( 'Requirement for live deposit:', 'wisdom-journal-manager' ); ?></strong>
-				<?php esc_html_e( 'Prefix + agency credentials. Without them, use agency “Local” (assign DOI strings only, no deposit) or leave deposit off.', 'wisdom-journal-manager' ); ?></p>
 			</div>
 
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">

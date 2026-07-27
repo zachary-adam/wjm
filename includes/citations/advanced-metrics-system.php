@@ -39,24 +39,46 @@ class WJM_Advanced_Metrics {
 	 * @return array
 	 */
 	public static function for_journal( $journal_id ) {
-		global $wpdb;
-		$table = WJM_Relational_Schema::table( 'papers' );
-		$row   = $wpdb->get_row(
-			$wpdb->prepare(
-				"SELECT COUNT(*) AS papers, COALESCE(SUM(citation_total),0) AS citations FROM {$table} WHERE journal_post_id = %d AND status = 'publish'",
-				absint( $journal_id )
+		$issue_ids = get_posts(
+			array(
+				'post_type'      => 'sjm_issue',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'meta_key'       => '_sjm_journal_id',
+				'meta_value'     => absint( $journal_id ),
 			)
 		);
-		if ( $row ) {
+
+		if ( ! $issue_ids ) {
 			return array(
-				'papers'    => (int) $row->papers,
-				'citations' => (int) $row->citations,
+				'papers'    => 0,
+				'citations' => 0,
 			);
 		}
 
+		$papers = get_posts(
+			array(
+				'post_type'      => 'sjm_paper',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'meta_query'     => array(
+					array(
+						'key'     => '_sjm_issue_id',
+						'value'   => $issue_ids,
+						'compare' => 'IN',
+					),
+				),
+			)
+		);
+
+		$total = 0;
+		foreach ( $papers as $paper_id ) {
+			$total += (int) get_post_meta( $paper_id, '_sjm_citation_total', true );
+		}
+
 		return array(
-			'papers'    => 0,
-			'citations' => 0,
+			'papers'    => count( $papers ),
+			'citations' => $total,
 		);
 	}
 

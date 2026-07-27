@@ -79,6 +79,7 @@ class WJM_Admin {
 				'wjm_api_crossref'         => 'wjm_api_crossref',
 				'wjm_api_semantic_scholar' => 'wjm_api_semantic_scholar',
 				'wjm_api_scopus'           => 'wjm_api_scopus',
+				'wjm_api_wos'              => 'wjm_api_wos',
 				'wjm_crossref_user'        => 'wjm_crossref_user',
 				'wjm_crossref_pass'        => 'wjm_crossref_pass',
 			);
@@ -241,34 +242,16 @@ class WJM_Admin {
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'WJM Settings', 'wisdom-journal-manager' ); ?></h1>
-			<p><?php esc_html_e( 'Citation API keys (encrypted). DOI / CrossRef live under DOI Manager. Stripe APC lives under Payments / APC.', 'wisdom-journal-manager' ); ?></p>
-
-			<div class="notice notice-info inline" style="padding:12px 14px;margin:12px 0 18px;">
-				<p style="margin:0 0 8px;"><strong><?php esc_html_e( 'Where things live', 'wisdom-journal-manager' ); ?></strong> · <?php echo esc_html( 'v' . WJM_VERSION ); ?></p>
-				<p style="margin:0;">
-					<a class="button button-primary" href="<?php echo esc_url( admin_url( 'edit.php?post_type=sjm_journal&page=wjm-payments' ) ); ?>"><?php esc_html_e( 'Payments / Stripe / APC', 'wisdom-journal-manager' ); ?></a>
-					<a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=sjm_journal&page=wjm-doi' ) ); ?>"><?php esc_html_e( 'DOI Manager', 'wisdom-journal-manager' ); ?></a>
-					<a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=sjm_journal&page=wjm-database' ) ); ?>"><?php esc_html_e( 'Database', 'wisdom-journal-manager' ); ?></a>
-				</p>
-			</div>
-
+			<p><?php esc_html_e( 'API keys are stored encrypted. For DOI generation / CrossRef membership, use DOI Manager.', 'wisdom-journal-manager' ); ?></p>
+			<p><a class="button button-primary" href="<?php echo esc_url( admin_url( 'edit.php?post_type=sjm_journal&page=wjm-doi' ) ); ?>"><?php esc_html_e( 'Open DOI Manager', 'wisdom-journal-manager' ); ?></a></p>
 			<form method="post">
 				<?php wp_nonce_field( 'wjm_settings' ); ?>
 				<table class="form-table">
-					<tr>
-						<th><?php esc_html_e( 'Semantic Scholar API key', 'wisdom-journal-manager' ); ?></th>
-						<td><input type="password" class="regular-text" name="wjm_api_semantic_scholar" autocomplete="new-password" placeholder="<?php esc_attr_e( 'Leave blank to keep', 'wisdom-journal-manager' ); ?>" /></td>
-					</tr>
-					<tr>
-						<th><?php esc_html_e( 'Scopus API key', 'wisdom-journal-manager' ); ?></th>
-						<td><input type="password" class="regular-text" name="wjm_api_scopus" autocomplete="new-password" placeholder="<?php esc_attr_e( 'Leave blank to keep', 'wisdom-journal-manager' ); ?>" /></td>
-					</tr>
-					<tr>
-						<th><?php esc_html_e( 'CrossRef (optional mailto)', 'wisdom-journal-manager' ); ?></th>
-						<td><input type="password" class="regular-text" name="wjm_api_crossref" autocomplete="new-password" placeholder="<?php esc_attr_e( 'Leave blank to keep', 'wisdom-journal-manager' ); ?>" /></td>
-					</tr>
+					<tr><th>Semantic Scholar API key</th><td><input type="password" class="regular-text" name="wjm_api_semantic_scholar" autocomplete="new-password" /></td></tr>
+					<tr><th>Scopus API key</th><td><input type="password" class="regular-text" name="wjm_api_scopus" autocomplete="new-password" /></td></tr>
+					<tr><th>Web of Science API key</th><td><input type="password" class="regular-text" name="wjm_api_wos" autocomplete="new-password" /></td></tr>
+					<tr><th>CrossRef (optional mailto token)</th><td><input type="password" class="regular-text" name="wjm_api_crossref" autocomplete="new-password" /></td></tr>
 				</table>
-				<p class="description"><?php esc_html_e( 'Citation counts use Crossref (default), Semantic Scholar, and Scopus when keyed. Web of Science counts are not wired in this version — leave any old WoS key unused.', 'wisdom-journal-manager' ); ?></p>
 				<p class="description"><?php esc_html_e( 'REST API base:', 'wisdom-journal-manager' ); ?> <code><?php echo esc_html( rest_url( 'wjm/v1/' ) ); ?></code></p>
 				<?php submit_button( __( 'Save Settings', 'wisdom-journal-manager' ), 'primary', 'wjm_save_settings' ); ?>
 			</form>

@@ -193,36 +193,30 @@ class WJM_REST_API {
 	}
 
 	private static function format_journal( $post ) {
-		$row = WJM_Repository::get_journal_by_post( $post->ID );
 		return array(
-			'id'          => $post->ID,
-			'entity_id'   => $row ? (int) $row->id : null,
-			'title'       => $row ? $row->title : get_the_title( $post ),
-			'link'        => get_permalink( $post ),
-			'issn'        => $row ? $row->issn : get_post_meta( $post->ID, '_sjm_issn', true ),
-			'publisher'   => $row ? $row->publisher : get_post_meta( $post->ID, '_sjm_publisher', true ),
-			'excerpt'     => get_the_excerpt( $post ),
+			'id'        => $post->ID,
+			'title'     => get_the_title( $post ),
+			'link'      => get_permalink( $post ),
+			'issn'      => get_post_meta( $post->ID, '_sjm_issn', true ),
+			'publisher' => get_post_meta( $post->ID, '_sjm_publisher', true ),
+			'excerpt'   => get_the_excerpt( $post ),
 		);
 	}
 
 	private static function format_paper( $post, $detailed = false ) {
-		$row  = WJM_Repository::get_paper_by_post( $post->ID );
 		$data = array(
-			'id'          => $post->ID,
-			'entity_id'   => $row ? (int) $row->id : null,
-			'journal_id'  => $row ? (int) $row->journal_post_id : (int) get_post_meta( $post->ID, '_sjm_journal_id', true ),
-			'issue_id'    => $row ? (int) $row->issue_post_id : (int) get_post_meta( $post->ID, '_sjm_issue_id', true ),
-			'title'       => $row ? $row->title : get_the_title( $post ),
-			'link'        => get_permalink( $post ),
-			'doi'         => $row ? $row->doi : get_post_meta( $post->ID, '_sjm_doi', true ),
-			'type'        => $row ? $row->paper_type : get_post_meta( $post->ID, '_sjm_paper_type', true ),
-			'status'      => $row ? $row->workflow_status : WJM_Workflow::get_status( $post->ID ),
-			'citations'   => $row ? (int) $row->citation_total : (int) get_post_meta( $post->ID, '_sjm_citation_total', true ),
-			'open_access' => $row ? (bool) $row->open_access : (bool) get_post_meta( $post->ID, '_sjm_open_access', true ),
-			'date'        => get_the_date( 'c', $post ),
+			'id'         => $post->ID,
+			'title'      => get_the_title( $post ),
+			'link'       => get_permalink( $post ),
+			'doi'        => get_post_meta( $post->ID, '_sjm_doi', true ),
+			'type'       => get_post_meta( $post->ID, '_sjm_paper_type', true ),
+			'status'     => WJM_Workflow::get_status( $post->ID ),
+			'citations'  => (int) get_post_meta( $post->ID, '_sjm_citation_total', true ),
+			'open_access'=> (bool) get_post_meta( $post->ID, '_sjm_open_access', true ),
+			'date'       => get_the_date( 'c', $post ),
 		);
 		if ( $detailed ) {
-			$data['abstract'] = $row ? $row->abstract : get_post_meta( $post->ID, '_sjm_abstract', true );
+			$data['abstract'] = get_post_meta( $post->ID, '_sjm_abstract', true );
 			$data['authors']  = array_map(
 				function ( $a ) {
 					return array(

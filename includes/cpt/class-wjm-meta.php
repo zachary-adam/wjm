@@ -30,12 +30,7 @@ class WJM_Meta {
 		wp_nonce_field( 'wjm_save_journal', 'wjm_journal_nonce' );
 		$issn      = get_post_meta( $post->ID, '_sjm_issn', true );
 		$publisher = get_post_meta( $post->ID, '_sjm_publisher', true );
-		$license   = get_post_meta( $post->ID, '_sjm_license', true );
 		$board     = get_post_meta( $post->ID, '_sjm_editorial_board', true );
-		$blind     = get_post_meta( $post->ID, '_sjm_default_blind', true );
-		if ( ! $blind ) {
-			$blind = 'double';
-		}
 		?>
 		<p>
 			<label for="sjm_issn"><strong><?php esc_html_e( 'ISSN', 'wisdom-journal-manager' ); ?></strong></label><br />
@@ -44,19 +39,6 @@ class WJM_Meta {
 		<p>
 			<label for="sjm_publisher"><strong><?php esc_html_e( 'Publisher', 'wisdom-journal-manager' ); ?></strong></label><br />
 			<input type="text" class="widefat" id="sjm_publisher" name="sjm_publisher" value="<?php echo esc_attr( $publisher ); ?>" />
-		</p>
-		<p>
-			<label for="sjm_license"><strong><?php esc_html_e( 'License', 'wisdom-journal-manager' ); ?></strong></label><br />
-			<input type="text" class="widefat" id="sjm_license" name="sjm_license" value="<?php echo esc_attr( $license ); ?>" placeholder="CC BY 4.0" />
-			<span class="description"><?php esc_html_e( 'Shown for DOAJ readiness and public pages.', 'wisdom-journal-manager' ); ?></span>
-		</p>
-		<p>
-			<label for="sjm_default_blind"><strong><?php esc_html_e( 'Default peer-review anonymity', 'wisdom-journal-manager' ); ?></strong></label><br />
-			<select class="widefat" id="sjm_default_blind" name="sjm_default_blind">
-				<option value="double" <?php selected( $blind, 'double' ); ?>><?php esc_html_e( 'Double-blind', 'wisdom-journal-manager' ); ?></option>
-				<option value="single" <?php selected( $blind, 'single' ); ?>><?php esc_html_e( 'Single-blind', 'wisdom-journal-manager' ); ?></option>
-				<option value="open" <?php selected( $blind, 'open' ); ?>><?php esc_html_e( 'Open', 'wisdom-journal-manager' ); ?></option>
-			</select>
 		</p>
 		<p>
 			<label for="sjm_editorial_board"><strong><?php esc_html_e( 'Editorial Board', 'wisdom-journal-manager' ); ?></strong></label><br />
@@ -225,14 +207,9 @@ class WJM_Meta {
 		$linked = WJM_Author_Profiles::get_authors_for_paper( $post->ID );
 		$all    = WJM_Author_Profiles::get_all_authors();
 		$ids    = wp_list_pluck( $linked, 'id' );
-		$roles  = WJM_Author_Profiles::credit_roles();
-		$by_id  = array();
-		foreach ( $linked as $a ) {
-			$by_id[ (int) $a->id ] = $a;
-		}
 		?>
 		<p><?php esc_html_e( 'Select authors for this paper.', 'wisdom-journal-manager' ); ?></p>
-		<select name="sjm_author_ids[]" multiple="multiple" class="widefat" style="min-height:120px;">
+		<select name="sjm_author_ids[]" multiple="multiple" class="widefat" style="min-height:140px;">
 			<?php foreach ( $all as $author ) : ?>
 				<option value="<?php echo esc_attr( $author->id ); ?>" <?php selected( in_array( (int) $author->id, array_map( 'intval', $ids ), true ) ); ?>>
 					<?php echo esc_html( $author->last_name . ', ' . $author->first_name ); ?>
@@ -242,30 +219,12 @@ class WJM_Meta {
 				</option>
 			<?php endforeach; ?>
 		</select>
-		<?php if ( $linked ) : ?>
-			<p><strong><?php esc_html_e( 'CRediT roles', 'wisdom-journal-manager' ); ?></strong></p>
-			<?php foreach ( $linked as $author ) : ?>
-				<p style="margin:0.35rem 0;">
-					<label>
-						<span class="description"><?php echo esc_html( $author->last_name . ', ' . $author->first_name ); ?></span><br />
-						<select name="sjm_credit_role[<?php echo esc_attr( $author->id ); ?>]" class="widefat">
-							<option value=""><?php esc_html_e( '— Role —', 'wisdom-journal-manager' ); ?></option>
-							<?php foreach ( $roles as $key => $label ) : ?>
-								<option value="<?php echo esc_attr( $key ); ?>" <?php selected( ! empty( $author->credit_role ) ? $author->credit_role : '', $key ); ?>><?php echo esc_html( $label ); ?></option>
-							<?php endforeach; ?>
-						</select>
-					</label>
-				</p>
-			<?php endforeach; ?>
-		<?php endif; ?>
 		<p class="description">
 			<a href="<?php echo esc_url( admin_url( 'admin.php?page=wjm-authors' ) ); ?>">
 				<?php esc_html_e( 'Manage authors', 'wisdom-journal-manager' ); ?>
 			</a>
-			· <?php esc_html_e( 'Save once after selecting authors to set CRediT roles.', 'wisdom-journal-manager' ); ?>
 		</p>
 		<?php
-		unset( $by_id );
 	}
 
 	public static function save_journal( $post_id, $post ) {
@@ -281,13 +240,7 @@ class WJM_Meta {
 
 		self::update_text( $post_id, '_sjm_issn', 'sjm_issn' );
 		self::update_text( $post_id, '_sjm_publisher', 'sjm_publisher' );
-		self::update_text( $post_id, '_sjm_license', 'sjm_license' );
 		self::update_textarea( $post_id, '_sjm_editorial_board', 'sjm_editorial_board' );
-		$blind = isset( $_POST['sjm_default_blind'] ) ? sanitize_key( wp_unslash( $_POST['sjm_default_blind'] ) ) : 'double';
-		if ( ! in_array( $blind, array( 'double', 'single', 'open' ), true ) ) {
-			$blind = 'double';
-		}
-		update_post_meta( $post_id, '_sjm_default_blind', $blind );
 
 		/**
 		 * Fires after journal metadata is saved.
@@ -340,13 +293,7 @@ class WJM_Meta {
 		self::update_textarea( $post_id, '_sjm_data_availability', 'sjm_data_availability' );
 
 		$author_ids = isset( $_POST['sjm_author_ids'] ) ? array_map( 'absint', (array) wp_unslash( $_POST['sjm_author_ids'] ) ) : array();
-		$credit     = array();
-		if ( isset( $_POST['sjm_credit_role'] ) && is_array( $_POST['sjm_credit_role'] ) ) {
-			foreach ( wp_unslash( $_POST['sjm_credit_role'] ) as $aid => $role ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				$credit[ absint( $aid ) ] = sanitize_key( $role );
-			}
-		}
-		WJM_Author_Profiles::sync_paper_authors( $post_id, $author_ids, $credit );
+		WJM_Author_Profiles::sync_paper_authors( $post_id, $author_ids );
 
 		/**
 		 * Fires after paper metadata is saved.

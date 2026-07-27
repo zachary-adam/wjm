@@ -32,19 +32,7 @@ class WJM_Email {
 			),
 			'reviewer_invitation'  => array(
 				'subject' => '[{site}] Review invitation: {title}',
-				'body'    => "Dear {name},\n\nYou are invited to review \"{title}\". Due: {due_date}.\n\nAccept or decline (no login required):\n{invite_link}\n\nOr open My Reviews after logging in:\n{reviews_link}\n\n{site}",
-			),
-			'reviewer_reminder'    => array(
-				'subject' => '[{site}] Reminder: review due for {title}',
-				'body'    => "Dear {name},\n\nFriendly reminder: your review of \"{title}\" is due {due_date} (status: {note}).\n\nInvite / respond: {invite_link}\nMy Reviews: {reviews_link}\n\n{site}",
-			),
-			'decision_letter'      => array(
-				'subject' => '[{site}] Editorial decision: {title}',
-				'body'    => "Dear {name},\n\n{letter}\n\n— {site}",
-			),
-			'revision_resubmitted' => array(
-				'subject' => '[{site}] Revision resubmitted: {title}',
-				'body'    => "A revision was resubmitted for \"{title}\".\n\nAuthor response:\n{note}\n\nEdit: {edit_link}\n",
+				'body'    => "Dear {name},\n\nYou are invited to review \"{title}\". Due: {due_date}.\n\nRespond here: {reviews_link}\n\n{site}",
 			),
 			'review_submitted'     => array(
 				'subject' => '[{site}] Review submitted: {title}',
@@ -53,22 +41,6 @@ class WJM_Email {
 			'status_changed'       => array(
 				'subject' => '[{site}] Status update: {title}',
 				'body'    => "Dear {name},\n\nYour manuscript \"{title}\" moved from {from_status} to {to_status}.\n\nNote: {note}\n\n{site}",
-			),
-			'appeal_opened'        => array(
-				'subject' => '[{site}] Appeal opened: {title}',
-				'body'    => "An appeal was opened for \"{title}\".\n\nNote:\n{note}\n\nEdit: {edit_link}\n",
-			),
-			'appeal_decided'       => array(
-				'subject' => '[{site}] Appeal decision: {title}',
-				'body'    => "Dear {name},\n\nYour appeal for \"{title}\" was marked: {appeal_status}.\n\n{note}\n\n{site}",
-			),
-			'apc_paid'             => array(
-				'subject' => '[{site}] APC paid: {title}',
-				'body'    => "The article processing charge for \"{title}\" has been marked paid.\n\nEdit: {edit_link}\n",
-			),
-			'apc_refunded'         => array(
-				'subject' => '[{site}] APC refunded: {title}',
-				'body'    => "The APC for \"{title}\" was refunded.\n\nEdit: {edit_link}\n",
 			),
 		);
 	}
@@ -182,14 +154,11 @@ class WJM_Email {
 			'title'        => $title,
 			'status'       => isset( $labels[ $status ] ) ? $labels[ $status ] : $status,
 			'edit_link'    => $paper_id ? get_edit_post_link( $paper_id, 'raw' ) : '',
-			'reviews_link' => admin_url( 'edit.php?post_type=sjm_journal&page=wjm-my-reviews' ),
-			'invite_link'  => '',
+			'reviews_link' => admin_url( 'admin.php?page=wjm-my-reviews' ),
 			'due_date'     => '',
 			'from_status'  => '',
 			'to_status'    => '',
 			'note'         => '',
-			'letter'       => '',
-			'round'        => '',
 			'recommendation' => '',
 		);
 

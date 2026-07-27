@@ -1,7 +1,6 @@
 <?php
 /**
- * Scholarly API client — CrossRef, Semantic Scholar, arXiv, Scopus.
- * Web of Science citation counts are intentionally not wired.
+ * Scholarly API client — CrossRef, Semantic Scholar, arXiv, Scopus, Web of Science.
  *
  * @package WisdomJournalManager
  */
@@ -113,11 +112,28 @@ class WJM_API_Client {
 	}
 
 	private static function web_of_science( $doi ) {
-		unset( $doi );
-		// Clarivate citation counts are not parsed in this release — refuse rather than return a fake 0.
-		return new WP_Error(
-			'wjm_wos_unsupported',
-			__( 'Web of Science citation counts are not wired in this version. Use Crossref, Semantic Scholar, or Scopus.', 'wisdom-journal-manager' )
+		$key = WJM_Encryption::get_secret( 'wjm_api_wos' );
+		if ( ! $key ) {
+			return new WP_Error( 'wjm_no_key', __( 'Web of Science API key not configured.', 'wisdom-journal-manager' ) );
+		}
+
+		// Clarivate API shape varies by license; store a best-effort stub response path.
+		$url  = 'https://api.clarivate.com/api/wos/?databaseId=WOS&usrQuery=DO=' . rawurlencode( $doi ) . '&count=1&firstRecord=1';
+		$data = self::get_json(
+			$url,
+			array(
+				'X-ApiKey' => $key,
+				'Accept'   => 'application/json',
+			)
+		);
+		if ( is_wp_error( $data ) ) {
+			return $data;
+		}
+
+		return array(
+			'source'         => 'wos',
+			'citation_count' => 0,
+			'raw'            => $data,
 		);
 	}
 

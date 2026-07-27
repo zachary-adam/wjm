@@ -26,7 +26,6 @@ class WJM_Upgrade {
 		WJM_Automated_Pages::ensure_catalog_page();
 		WJM_Automated_Pages::ensure_submit_page();
 		WJM_Automation_System::schedule_events();
-		WJM_SEO::register_rewrite();
 		flush_rewrite_rules( false );
 		update_option( 'wjm_version', WJM_VERSION );
 

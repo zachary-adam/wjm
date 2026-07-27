@@ -30,28 +30,6 @@ $options = array(
 	'wjm_datacite_user',
 	'wjm_datacite_pass',
 	'wjm_doi_last_connection_test',
-	'wjm_payment_settings',
-	'wjm_stripe_secret',
-	'wjm_stripe_publishable',
-	'wjm_stripe_webhook_secret',
-	'wjm_stripe_last_connection_test',
-	'wjm_relational_db_version',
-	'wjm_relational_migrated',
-	'wjm_relational_migrated_at',
-	'wjm_access_settings',
-	'wjm_demo_imported_at',
-	'wjm_advanced_mode',
-	'wjm_decision_templates',
-	'wjm_first_cycle_proven_at',
-	'wjm_webhook_url',
-	'wjm_webhook_events',
-	'wjm_waiver_codes',
-	'wjm_orcid_settings',
-	'wjm_orcid_secret',
-	'wjm_oai_rewrite_flushed',
-	'wjm_rp_deals',
-	'wjm_ithenticate_settings',
-	'wjm_ithenticate_api_key',
 );
 
 foreach ( $options as $option ) {
@@ -70,12 +48,6 @@ $tables = array(
 	$wpdb->prefix . 'sjm_reviews',
 	$wpdb->prefix . 'sjm_manuscripts',
 	$wpdb->prefix . 'sjm_email_log',
-	$wpdb->prefix . 'sjm_galleys',
-	$wpdb->prefix . 'sjm_copyedit_tasks',
-	$wpdb->prefix . 'sjm_journals',
-	$wpdb->prefix . 'sjm_issues',
-	$wpdb->prefix . 'sjm_papers',
-	$wpdb->prefix . 'sjm_subscriptions',
 );
 
 foreach ( $tables as $table ) {

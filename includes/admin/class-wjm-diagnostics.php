@@ -48,7 +48,7 @@ class WJM_Diagnostics {
 		global $wpdb;
 		$results = array();
 
-		$tables = array( 'authors', 'paper_authors', 'citations', 'audit', 'rate', 'collaboration', 'workflow', 'assignments', 'reviews', 'manuscripts', 'email_log', 'galleys', 'copyedit', 'subscriptions' );
+		$tables = array( 'authors', 'paper_authors', 'citations', 'audit', 'rate', 'collaboration', 'workflow', 'assignments', 'reviews', 'manuscripts', 'email_log' );
 		foreach ( $tables as $key ) {
 			$table  = WJM_Database_Schema::table( $key );
 			$exists = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) === $table;
@@ -58,23 +58,6 @@ class WJM_Diagnostics {
 				'detail' => $exists ? 'Present' : 'Missing — re-activate the plugin',
 			);
 		}
-
-		foreach ( array( 'journals', 'issues', 'papers' ) as $key ) {
-			$table  = WJM_Relational_Schema::table( $key );
-			$exists = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) === $table;
-			$results[] = array(
-				'label'  => sprintf( 'Relational %s', $table ),
-				'ok'     => $exists,
-				'detail' => $exists ? 'Present (source of truth)' : 'Missing — visit Journals → Database or re-activate',
-			);
-		}
-
-		$migrated = (bool) get_option( 'wjm_relational_migrated' );
-		$results[] = array(
-			'label'  => 'Relational migration',
-			'ok'     => $migrated,
-			'detail' => $migrated ? 'Completed (' . (string) get_option( 'wjm_relational_db_version', '?' ) . ')' : 'Pending — open Journals → Database',
-		);
 
 		$results[] = array(
 			'label'  => 'Custom post types',
@@ -117,20 +100,6 @@ class WJM_Diagnostics {
 			'label'  => 'CrossRef reachability',
 			'ok'     => true,
 			'detail' => 'Use a paper DOI refresh to verify live connectivity',
-		);
-
-		$pay = WJM_Payments::settings();
-		$stripe_ready = ( 'stripe' === $pay['provider'] ) && (bool) WJM_Encryption::get_secret( 'wjm_stripe_secret' );
-		$results[] = array(
-			'label'  => 'Stripe APC',
-			'ok'     => empty( $pay['enabled'] ) || 'manual' === $pay['provider'] || $stripe_ready,
-			'detail' => empty( $pay['enabled'] )
-				? 'APC disabled'
-				: ( 'manual' === $pay['provider']
-					? 'Manual provider'
-					: ( $stripe_ready
-						? 'Stripe keys present · webhook ' . rest_url( 'wjm/v1/stripe-webhook' )
-						: 'Stripe selected but secret key missing' ) ),
 		);
 
 		return $results;

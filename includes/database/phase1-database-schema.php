@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WJM_Database_Schema {
 
-	const DB_VERSION = '3.4.0';
+	const DB_VERSION = '2.0.0';
 
 	/**
 	 * Create or upgrade custom tables.
@@ -33,9 +33,6 @@ class WJM_Database_Schema {
 		$reviewers     = $wpdb->prefix . 'sjm_review_assignments';
 		$files         = $wpdb->prefix . 'sjm_manuscripts';
 		$emails        = $wpdb->prefix . 'sjm_email_log';
-		$galleys       = $wpdb->prefix . 'sjm_galleys';
-		$copyedit      = $wpdb->prefix . 'sjm_copyedit_tasks';
-		$subscriptions = $wpdb->prefix . 'sjm_subscriptions';
 
 		$sql_authors = "CREATE TABLE {$authors} (
 			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -61,7 +58,6 @@ class WJM_Database_Schema {
 			author_id bigint(20) unsigned NOT NULL,
 			author_order int(11) NOT NULL DEFAULT 1,
 			is_corresponding tinyint(1) NOT NULL DEFAULT 0,
-			credit_role varchar(191) DEFAULT NULL,
 			PRIMARY KEY  (id),
 			UNIQUE KEY paper_author (paper_id, author_id),
 			KEY author_id (author_id)
@@ -139,12 +135,10 @@ class WJM_Database_Schema {
 			status varchar(30) NOT NULL DEFAULT 'invited',
 			due_date date DEFAULT NULL,
 			blind_type varchar(20) NOT NULL DEFAULT 'double',
-			invite_token varchar(64) DEFAULT NULL,
 			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			PRIMARY KEY  (id),
 			UNIQUE KEY paper_reviewer (paper_id, reviewer_user_id),
-			UNIQUE KEY invite_token (invite_token),
 			KEY reviewer_user_id (reviewer_user_id),
 			KEY status (status)
 		) {$charset};";
@@ -191,55 +185,6 @@ class WJM_Database_Schema {
 			KEY paper_id (paper_id)
 		) {$charset};";
 
-		$sql_galleys = "CREATE TABLE {$galleys} (
-			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-			paper_id bigint(20) unsigned NOT NULL,
-			attachment_id bigint(20) unsigned NOT NULL,
-			label varchar(100) NOT NULL DEFAULT 'PDF',
-			galley_type varchar(30) NOT NULL DEFAULT 'pdf',
-			locale varchar(20) NOT NULL DEFAULT 'en_US',
-			is_public tinyint(1) NOT NULL DEFAULT 1,
-			sort_order int(11) NOT NULL DEFAULT 0,
-			uploaded_by bigint(20) unsigned DEFAULT NULL,
-			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			PRIMARY KEY  (id),
-			KEY paper_id (paper_id),
-			KEY is_public (is_public)
-		) {$charset};";
-
-		$sql_copyedit = "CREATE TABLE {$copyedit} (
-			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-			paper_id bigint(20) unsigned NOT NULL,
-			task_key varchar(60) NOT NULL,
-			label varchar(191) NOT NULL,
-			is_done tinyint(1) NOT NULL DEFAULT 0,
-			done_by bigint(20) unsigned DEFAULT NULL,
-			done_at datetime DEFAULT NULL,
-			notes text,
-			PRIMARY KEY  (id),
-			UNIQUE KEY paper_task (paper_id, task_key),
-			KEY paper_id (paper_id)
-		) {$charset};";
-
-		$sql_subscriptions = "CREATE TABLE {$subscriptions} (
-			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-			user_id bigint(20) unsigned NOT NULL,
-			journal_post_id bigint(20) unsigned NOT NULL,
-			stripe_subscription_id varchar(191) NOT NULL,
-			stripe_customer_id varchar(191) DEFAULT NULL,
-			stripe_session_id varchar(191) DEFAULT NULL,
-			status varchar(40) NOT NULL DEFAULT 'active',
-			current_period_end datetime DEFAULT NULL,
-			cancel_at_period_end tinyint(1) NOT NULL DEFAULT 0,
-			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-			PRIMARY KEY  (id),
-			UNIQUE KEY stripe_subscription_id (stripe_subscription_id),
-			KEY user_journal (user_id, journal_post_id),
-			KEY journal_post_id (journal_post_id),
-			KEY status (status)
-		) {$charset};";
-
 		dbDelta( $sql_authors );
 		dbDelta( $sql_paper_authors );
 		dbDelta( $sql_citations );
@@ -251,13 +196,6 @@ class WJM_Database_Schema {
 		dbDelta( $sql_reviews );
 		dbDelta( $sql_files );
 		dbDelta( $sql_emails );
-		dbDelta( $sql_galleys );
-		dbDelta( $sql_copyedit );
-		dbDelta( $sql_subscriptions );
-
-		if ( class_exists( 'WJM_Relational_Schema' ) ) {
-			WJM_Relational_Schema::create_tables();
-		}
 
 		update_option( 'wjm_db_version', self::DB_VERSION );
 	}
@@ -292,9 +230,6 @@ class WJM_Database_Schema {
 			'reviews'       => $wpdb->prefix . 'sjm_reviews',
 			'manuscripts'   => $wpdb->prefix . 'sjm_manuscripts',
 			'email_log'     => $wpdb->prefix . 'sjm_email_log',
-			'galleys'        => $wpdb->prefix . 'sjm_galleys',
-			'copyedit'       => $wpdb->prefix . 'sjm_copyedit_tasks',
-			'subscriptions'  => $wpdb->prefix . 'sjm_subscriptions',
 		);
 		return isset( $map[ $key ] ) ? $map[ $key ] : '';
 	}
