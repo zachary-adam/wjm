@@ -1,5 +1,5 @@
 === Wisdom Journal Manager ===
-Contributors: aethex
+Contributors: zacharyadam
 Tags: academic, journal, publishing, peer-review, citations, orcid, doi, jats
 Requires at least: 5.0
 Tested up to: 6.7

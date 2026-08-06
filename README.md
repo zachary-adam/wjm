@@ -4,6 +4,12 @@
 
 **Authors submit → editors work the Inbox → review → publish.**
 
+## Get the Plugin
+
+📦 **[Install from the WordPress Plugin Directory](https://wordpress.org/plugins/wisdom-journal-manager/)**
+
+This repo is the development source. For the stable, WordPress.org-reviewed release, install directly from the link above.
+
 No ScholarOne. No WordPress login for authors. Stripe, DOI, and ORCID stay optional.
 
 <p align="center">
